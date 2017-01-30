@@ -1,6 +1,6 @@
-import Ringa, { event } from 'ringa';
+import Ringa, { notify } from 'ringa';
 
-import { ShowLoading, PopLoading, LoadingModel} from './modules/LoadingOverlayModule';
+import { ShowLoading, PopLoading, LoadingOverlayModel} from './modules/LoadingOverlayModule';
 
 import {ProcessLists} from './commands/APICallProcessing';
 
@@ -13,13 +13,14 @@ export default class RingaExampleApplicationController extends Ringa.Controller 
 
     this.api = new APIController(domNode);
 
-    this.injections.loadingModel = new LoadingModel();
+    this.injections.loadingOverlayModel = new LoadingOverlayModel();
     this.injections.model = new ApplicationModel();
 
     this.addListener('initialize', [
       ShowLoading('Loading Lists'),
       APIController.GET_LISTS,
       ProcessLists,
+      notify('viewListsUpdated'),
       PopLoading
     ]);
 

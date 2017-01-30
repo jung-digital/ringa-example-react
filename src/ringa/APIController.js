@@ -1,4 +1,4 @@
-import Ringa from 'ringa';
+import Ringa, {event} from 'ringa';
 
 let API_ROOT = process.env.API_ROOT || 'http://localhost:9000';
 
@@ -48,50 +48,50 @@ export default class APIController extends Ringa.Controller {
       return this.request({url, type: 'DELETE', id: $ringaEvent.detail[idParam]});
     });
 
-    this.addListener('getLists', Ringa.event('GET', {
+    this.addListener('getLists', event('GET', {
       url: '/list'
     }));
 
-    this.addListener('getList', Ringa.event('GET', {
+    this.addListener('getList', event('GET', {
       url: '/list',
       idParam: 'id'
     }));
 
-    this.addListener('delList', Ringa.event('DELETE', {
+    this.addListener('delList', event('DELETE', {
       url: '/list',
       idParam: 'id'
     }));
 
-    this.addListener('postList', Ringa.event('POST', {
+    this.addListener('postList', event('POST', {
       url: '/lists',
       bodyParam: 'list'
     }));
 
-    this.addListener('putList', Ringa.event('PUT', {
+    this.addListener('putList', event('PUT', {
       url: '/lists',
       bodyParam: 'list'
     }));
 
-    this.addListener('getItems', Ringa.event('GET', {
+    this.addListener('getItems', event('GET', {
       url: '/items'
     }));
 
-    this.addListener('getItem',  Ringa.event('GET', {
+    this.addListener('getItem',  event('GET', {
       url: '/item',
       idParam: 'id'
     }));
 
-    this.addListener('delItem',  Ringa.event('DELETE', {
+    this.addListener('delItem',  event('DELETE', {
       url: '/lists',
       idParam: 'id'
     }));
 
-    this.addListener('postItem', Ringa.event('POST', {
+    this.addListener('postItem', event('POST', {
       url: '/lists',
       bodyParam: 'item'
     }));
 
-    this.addListener('putItem',  Ringa.event('PUT', {
+    this.addListener('putItem',  event('PUT', {
       url: '/lists',
       bodyParam: 'item'
     }));
@@ -119,11 +119,11 @@ export default class APIController extends Ringa.Controller {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response);
+          resolve(JSON.parse(xhr.response));
         } else {
           console.error('API Error', xhr);
 
-          reject(xhr.response);
+          reject(JSON.parse(xhr.response));
         }
       };
 

@@ -1,20 +1,22 @@
 //-------------------------------------
 // Executors
 //-------------------------------------
-export function PopLoading (loadingModel) {
-  loadingModel.hide();
+export function PopLoading ($controller, $ringaEvent, loadingOverlayModel) {
+  loadingOverlayModel.pop();
+  $controller.notify($ringaEvent, 'loadingOverlayMessagesChanged');
 }
 
 export function ShowLoading(message) {
-  return (loadingModel) => {
-    loadingModel.show(message);
+  return ($controller, $ringaEvent, loadingOverlayModel) => {
+    loadingOverlayModel.show(message);
+    $controller.notify($ringaEvent, 'loadingOverlayMessagesChanged');
   }
 }
 
 //-------------------------------------
 // Model
 //-------------------------------------
-export class LoadingModel {
+export class LoadingOverlayModel {
   constructor() {
     this.messages = [];
   }
