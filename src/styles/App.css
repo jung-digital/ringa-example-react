@@ -75,7 +75,9 @@ body {
 
 .list--title {
   background: #0c7cba;
-  padding: 1rem;
+  padding: 1rem .6rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .list--add-item {

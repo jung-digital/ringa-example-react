@@ -40,7 +40,10 @@ class AppComponent extends React.Component {
   renderList(list) {
     list.items = _.times(Math.floor(Math.random() * 8 ), this.mockItem);
     return list.id ? <div className="list" key={list.id}>
-      <div className="list--title">{list.title}</div>
+      <div className="list--title">{list.title}
+        <div className="item--delete"><i className="fa fa-times-circle" aria-hidden="true"></i></div>
+      </div>
+
       <div className="list--items">
         {list.items.map(this.renderItem)}
       </div>
