@@ -33,7 +33,7 @@ class AppComponent extends React.Component {
   mockItem(n) {
     return {
       id: Date.now().toString() + n,
-      title: _.sample(['Lorem ', 'ipsum ', 'dolor ', 'sit ', 'amet ', 'consectetur ', 'adipiscing ', 'elit ', 'Suspendisse ', 'ac '], 2),
+      title: _.sampleSize(['Lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'Suspendisse', 'ac '], 2).join(' '),
     };
   }
 
