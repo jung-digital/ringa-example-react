@@ -10,8 +10,8 @@ export default class APIController extends Ringa.Controller {
   // Constructor
   //-----------------------------------
   constructor(domNode) {
-    super('API', domNode, {
-      timeout: 2000
+    super('APIController', domNode, {
+      timeout: 5000
     });
 
     // API Events, used below via apiEvent
@@ -111,7 +111,7 @@ export default class APIController extends Ringa.Controller {
         url = `${url}/${props.id}`;
       }
 
-      console.log(url);
+      console.log('REQUESTING API', url);
       xhr.open(props.type, url, true);
 
       xhr.setRequestHeader('Content-type', 'application/json');
@@ -119,7 +119,11 @@ export default class APIController extends Ringa.Controller {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(JSON.parse(xhr.response));
+          let parsedResponse = JSON.parse(xhr.response);
+
+          console.log('API RESULT', props, parsedResponse);
+
+          resolve(parsedResponse);
         } else {
           console.error('API Error', xhr);
 

@@ -8,7 +8,7 @@
 
 const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
-const dfltPort = 8000;
+const defaultPort = 8000;
 
 /**
  * Get the default modules object for webpack
@@ -16,41 +16,77 @@ const dfltPort = 8000;
  */
 function getDefaultModules() {
   return {
-    preLoaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         include: srcPath,
-        loader: 'eslint-loader'
-      }
-    ],
-    loaders: [
+        use: 'eslint-loader',
+        enforce: 'pre'
+      },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       },
       {
         test: /\.sass/,
-        loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              indentedSyntax: true
+            }
+          }
+        ]
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader:'sass-loader',
+            options: {
+              outputStyle: 'expanded'
+            }
+          }
+        ]
       },
       {
         test: /\.less/,
-        loader: 'style-loader!css-loader!less-loader'
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader'
+        ]
       },
       {
         test: /\.styl/,
-        loader: 'style-loader!css-loader!stylus-loader'
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
       },
       {
         test: /\.(png|jpg|gif|woff|woff2)$/,
-        loader: 'url-loader?limit=8192'
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit:8192
+          }
+        }
       },
       {
         test: /\.(mp4|ogg|svg)$/,
-        loader: 'file-loader'
+        use: [
+          'file-loader'
+        ]
       }
     ]
   };
@@ -59,6 +95,6 @@ function getDefaultModules() {
 module.exports = {
   srcPath: srcPath,
   publicPath: '/assets/',
-  port: dfltPort,
+  port: defaultPort,
   getDefaultModules: getDefaultModules
 };

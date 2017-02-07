@@ -1,3 +1,5 @@
+import {Model} from 'ringa';
+
 //-------------------------------------
 // Executors
 //-------------------------------------
@@ -16,9 +18,20 @@ export function ShowLoading(message) {
 //-------------------------------------
 // Model
 //-------------------------------------
-export class LoadingOverlayModel {
+export class LoadingOverlayModel extends Model {
   constructor() {
+    super('loadingOverlayModel');
+
     this.messages = [];
+  }
+
+  set messages(value) {
+    this._messages = value;
+    this.notify();
+  }
+
+  get messages() {
+    return this._messages;
   }
 
   get showing() {

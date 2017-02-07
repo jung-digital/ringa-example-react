@@ -3,31 +3,24 @@ require('styles/App.css');
 
 import React from 'react';
 import ApplicationController from '../ringa/ApplicationController';
+import APIController from '../ringa/APIController';
 import LoadingOverlay from './LoadingOverlay';
 import _ from 'lodash';
-
+import {attach, depend, dependency} from 'react-ringa';
 
 class AppComponent extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      lists: undefined
-    };
-  }
+    this.state = {};
 
-  componentDidMount() {
-    if (this.controller) {
-      throw new Error('WE SHOULDNT BE MOUNTING TWICE');
-    }
+    let api = new APIController();
+    let applicationController = new ApplicationController();
 
-    this.controller = new ApplicationController(this.refs.application);
+    attach(this, applicationController);
+    attach(this, api);
 
-    this.controller.watch(['viewListsUpdated'], (model) => {
-      this.setState({
-        lists: model.lists.concat({})
-      });
-    });
+    depend(this, dependency('applicationModel', 'lists'));
   }
 
   mockItem(n) {
@@ -63,7 +56,7 @@ class AppComponent extends React.Component {
   render() {
     let { lists = [] } = this.state;
 
-    let header = 
+    let header =
       (<div className="header">
         <h1 className="header--title">ringa-example-react</h1>
         <div className="header--links">
@@ -79,7 +72,7 @@ class AppComponent extends React.Component {
       </div>);
 
     return (
-      <div ref="application">
+      <div ref="ringaComponent">
         {header}
         <div className="index">
           {lists.map(this.renderList.bind(this))}

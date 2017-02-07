@@ -1,29 +1,31 @@
-import Ringa, { notify } from 'ringa';
+import Ringa from 'ringa';
 
-import { ShowLoading, PopLoading, LoadingOverlayModel} from './modules/LoadingOverlayModule';
+import { ShowLoading, PopLoading, LoadingOverlayModel } from './modules/LoadingOverlayModule';
 
-import {ProcessLists} from './commands/APICallProcessing';
+import { ProcessLists } from './commands/APICallProcessing';
 
 import APIController from './APIController';
 import ApplicationModel from './models/ApplicationModel';
 
-export default class RingaExampleApplicationController extends Ringa.Controller {
+export default class ApplicationController extends Ringa.Controller {
   constructor(domNode) {
-    super('RingaExampleApplicationController', domNode);
+    super('ApplicationController', domNode);
 
-    this.api = new APIController(domNode);
-
-    this.injections.loadingOverlayModel = new LoadingOverlayModel();
-    this.injections.model = new ApplicationModel();
+    this.addModel(new LoadingOverlayModel());
+    this.addModel(new ApplicationModel());
 
     this.addListener('initialize', [
+      () => {
+        console.log('yep');
+      },
       ShowLoading('Loading Lists'),
       APIController.GET_LISTS,
       ProcessLists,
-      notify('viewListsUpdated'),
       PopLoading
     ]);
+  }
 
+  busMounted() {
     this.dispatch('initialize');
   }
 }

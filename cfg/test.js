@@ -20,7 +20,7 @@ module.exports = {
         ]
       }
     ],
-    loaders: [
+    rules: [
       {
         test: /\.(png|jpg|gif|woff|woff2|css|sass|scss|less|styl)$/,
         loader: 'null-loader'
