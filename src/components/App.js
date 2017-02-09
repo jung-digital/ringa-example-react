@@ -1,26 +1,32 @@
 require('normalize.css/normalize.css');
-require('styles/App.css');
+require('./App.scss');
 
 import React from 'react';
-import ApplicationController from '../ringa/ApplicationController';
+
+import AppController from './AppController';
 import APIController from '../ringa/APIController';
-import LoadingOverlay from './LoadingOverlay';
+import PopupLoadingController from './popupLoading/PopupLoadingController';
+import PopupLoading from './popupLoading/PopupLoading';
+
 import _ from 'lodash';
+import classnames from 'classnames';
+
 import {attach, depend, dependency} from 'react-ringa';
 
-class AppComponent extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
 
     this.state = {};
 
-    let api = new APIController();
-    let applicationController = new ApplicationController();
+    attach(this, new APIController());
+    attach(this, new AppController());
+    attach(this, new PopupLoadingController());
 
-    attach(this, applicationController);
-    attach(this, api);
-
-    depend(this, dependency('applicationModel', 'lists'));
+    depend(this, [
+      dependency('appModel', 'lists'),
+      dependency('appModel', 'windowScrollAllowed')
+    ]);
   }
 
   mockItem(n) {
@@ -71,19 +77,21 @@ class AppComponent extends React.Component {
         </div>
       </div>);
 
+    let classes = classnames({
+      app: true,
+      'overflow-hidden': !this.state.windowScrollAllowed
+    });
+
     return (
-      <div ref="ringaComponent">
+      <div ref="ringaComponent" className={classes}>
         {header}
         <div className="index">
           {lists.map(this.renderList.bind(this))}
         </div>
-        <LoadingOverlay loadingModel={this.controller ? this.controller.injections.loadingModel : undefined}/>
+        <PopupLoading />
       </div>
     );
   }
 }
 
-AppComponent.defaultProps = {
-};
-
-export default AppComponent;
+export default App;

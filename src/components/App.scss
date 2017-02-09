@@ -1,0 +1,124 @@
+/* Base Application Styles */
+body {
+  color: #fff;
+  background: #222;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.index img {
+  margin: 40px auto;
+  border-radius: 4px;
+  background: #fff;
+  display: block;
+}
+
+.index .notice {
+  margin: 20px auto;
+  padding: 15px 0;
+  text-align: center;
+  border: 1px solid #000;
+  border-width: 1px 0;
+  background: #666;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #bbb;
+}
+
+.header--title {
+  padding: 0em 1rem;
+}
+
+.header--links {
+  display: inherit;
+  align-items: center;
+  padding: 0em 1rem;
+  flex: 0 0 18em;
+  justify-content: space-between;
+}
+
+.header--link-group li {
+  display: block;
+}
+
+.header--link {
+  color: white;
+}
+
+.index {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+.list {
+  flex: 0 1 10em;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: .5em;
+}
+
+.list--add {
+  background: #a3d977;
+  margin: 0.5em;
+  height: 3em;
+  width: 3em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3em;
+  cursor: pointer;
+}
+
+.list--title {
+  background: #0c7cba;
+  padding: 1rem .6rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list--add-item {
+  text-align: center;
+  background: #a3d977;
+  padding: 0.5em 0em;
+  cursor: pointer;
+}
+
+.list--items {
+  padding: 0em .4rem;
+  background: #eee;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.25em 0em;
+  padding: .25em .1em;
+  color: #222;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.item--title {
+}
+
+.item--delete {
+  cursor: pointer;
+}
