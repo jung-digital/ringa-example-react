@@ -1,0 +1,37 @@
+.list {
+  flex: 0 1 10em;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: .5em;
+}
+
+.list--add {
+  background: #a3d977;
+  margin: 0.5em;
+  height: 3em;
+  width: 3em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3em;
+  cursor: pointer;
+}
+
+.list--title {
+  background: #0c7cba;
+  padding: 1rem .6rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list--add-item {
+  text-align: center;
+  background: #a3d977;
+  padding: 0.5em 0em;
+  cursor: pointer;
+}
+
+.list--items {
+  padding: 0em .4rem;
+  background: #eee;
+}

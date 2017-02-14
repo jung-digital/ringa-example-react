@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.25em 0em;
+  padding: .25em .1em;
+  color: #222;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.item--title {
+}
+
+.item--delete {
+  cursor: pointer;
+}
