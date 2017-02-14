@@ -1,5 +1,5 @@
 .list {
-  flex: 0 1 10em;
+  flex: 0 1 15em;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -32,6 +32,6 @@
 }
 
 .list--items {
-  padding: 0em .4rem;
+  padding: .4em .4rem;
   background: #eee;
 }

@@ -132,7 +132,8 @@ export default class APIController extends Ringa.Controller {
         url = `${url}/${props.id}`;
       }
 
-      console.log('REQUESTING API', url);
+      console.log(`${props.type} ${url}`);
+
       xhr.open(props.type, url, true);
 
       xhr.setRequestHeader('Content-type', 'application/json');
@@ -140,7 +141,7 @@ export default class APIController extends Ringa.Controller {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          let parsedResponse = JSON.parse(xhr.response);
+          let parsedResponse = xhr.response ? JSON.parse(xhr.response) : undefined;
 
           console.log('API RESULT', props, parsedResponse);
 

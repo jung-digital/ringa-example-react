@@ -17,6 +17,7 @@ export default class List extends React.Component {
     depend(this, dependency(AppModel, 'editItem'));
 
     this.addItemClickHandler = this.addItemClickHandler.bind(this);
+    this.deleteListClickHandler = this.deleteListClickHandler.bind(this);
   }
 
   render() {
@@ -26,13 +27,13 @@ export default class List extends React.Component {
     return <div className="list" key={id} ref="root">
         <Loader loading={loading}>
           <div className="list--title">{title}
-            <div className="item--delete">
+            <div className="item--delete" onClick={this.deleteListClickHandler}>
               <i className="fa fa-times-circle" aria-hidden="true"></i>
             </div>
           </div>
 
           <div className="list--items">
-            {items.map(item => <Item  key={item.id} item={item} editing={item.id === editItem.id}/>)}
+            {items.map(item => <Item key={item || item.id} item={item} editing={item.id === editItem.id}/>)}
           </div>
           <div className="list--add-item" onClick={this.addItemClickHandler}>+</div>
         </Loader>
@@ -40,8 +41,17 @@ export default class List extends React.Component {
   }
 
   addItemClickHandler() {
-    dispatch(AppController.ADD_ITEM_TO_LIST, {list: this.props.list}, this.refs.root).then(() => {
-      this.forceUpdate();
-    });
+    dispatch(AppController.ADD_ITEM_TO_LIST, {
+      list: this.props.list
+    }, this.refs.root)
+      .then(() => {
+        this.forceUpdate();
+      });
+  }
+
+  deleteListClickHandler() {
+    dispatch(AppController.DELETE_LIST, {
+      id: this.props.list.id
+    }, this.refs.root);
   }
 }

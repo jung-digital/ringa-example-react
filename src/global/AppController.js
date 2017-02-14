@@ -17,8 +17,6 @@ export default class AppController extends Controller {
     this.addModel(new PopupLoadingModel());
     this.addModel(new AppModel());
 
-
-
     // AppController.SHOW_POPUP
     this.addListener('showPopup', appModel => {
       appModel.windowScrollAllowed = false;
@@ -46,6 +44,11 @@ export default class AppController extends Controller {
       console.log(list);
         list.pushItem(Item.deserialize($lastPromiseResult));
       }
+    ]);
+
+    this.addListener('deleteList', [
+      APIController.DEL_LIST,
+      AppController.REFRESH_LISTS
     ]);
 
     // AppController.INITIALIZE
