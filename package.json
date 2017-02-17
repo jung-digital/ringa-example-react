@@ -69,8 +69,8 @@
     "normalize.css": "^4.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.0.0",
-    "react-ringa": "^0.0.20",
-    "ringa": "^0.0.21",
+    "react-ringa": "^0.0.24",
+    "ringa": "^0.0.24",
     "webpack": "^2.2.0"
   }
 }
