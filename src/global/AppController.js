@@ -13,7 +13,7 @@ import List from '../valueObjects/List';
 
 export default class AppController extends Controller {
   constructor() {
-    super();
+    super('AppController');
 
     this.addModel(new PopupLoadingModel());
     this.addModel(new AppModel());
@@ -36,6 +36,7 @@ export default class AppController extends Controller {
 
     // AppController.ADD_ITEM_TO_LIST
     this.addListener('addItemToList', [
+      (someProperty) => {},
       ($ringaEvent) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
         $ringaEvent.detail.item = new Item();

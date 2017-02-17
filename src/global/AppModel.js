@@ -25,6 +25,18 @@ export default class AppModel extends Model {
   //-----------------------------------
   // Methods
   //-----------------------------------
+  sortList() {
+
+  }
+
+  notify(what) {
+    if (what === 'lists') {
+      this.sortList();
+    }
+
+    super.notify(what);
+  }
+
   pushList(list) {
     this.lists.push(list);
     list.order = this.lists.length - 1;
