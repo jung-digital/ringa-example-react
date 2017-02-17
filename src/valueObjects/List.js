@@ -10,13 +10,28 @@ class List extends Model {
     this.addProperty('items', []);
 
     // Set to true when the child items are loading so we can display a loader on the list.
-    this.addProperty('itemsLoading', false);
+    this.addProperty('loading', true);
+  }
+
+  get itemIds() {
+    return this.items.map(item => typeof item === 'string' ? item : item.id);
   }
 
   pushItem(item) {
     this.items.push(item);
 
     this.notify('items');
+  }
+
+  serialize() {
+    console.log('SERIALIZING');
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      items: this.items.map(item => item.id),
+      order: this.order
+    };
   }
 }
 

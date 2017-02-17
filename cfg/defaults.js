@@ -31,20 +31,6 @@ function getDefaultModules() {
         ]
       },
       {
-        test: /\.sass/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              outputStyle: 'expanded',
-              indentedSyntax: true
-            }
-          }
-        ]
-      },
-      {
         test: /\.scss/,
         use: [
           'style-loader',
@@ -55,22 +41,6 @@ function getDefaultModules() {
               outputStyle: 'expanded'
             }
           }
-        ]
-      },
-      {
-        test: /\.less/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.styl/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'stylus-loader'
         ]
       },
       {

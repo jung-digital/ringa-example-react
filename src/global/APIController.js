@@ -22,7 +22,7 @@ export default class APIController extends Ringa.Controller {
     this.addListener('GET', ($ringaEvent, url) => {
       let idParam = $ringaEvent.detail.idParam;
       if (idParam && !$ringaEvent.detail[idParam]) {
-        throw new Error(`GET Parameter was not provided on RingaEvent detail! ${idParam}`);
+        throw new Error(`GET Parameter '${idParam}' was not provided on RingaEvent detail!`);
       }
 
       return this.request({url, type: 'GET', id: $ringaEvent.detail[idParam]});
@@ -31,7 +31,7 @@ export default class APIController extends Ringa.Controller {
     // APIController.POST
     this.addListener('POST', ($ringaEvent, url, bodyParam) => {
       if (!$ringaEvent.detail[bodyParam]) {
-        throw new Error(`POST Parameter was not provided on RingaEvent detail! ${bodyParam}`);
+        throw new Error(`POST Parameter '${bodyParam}' was not provided on RingaEvent detail!`);
       }
 
       return this.request({url, type: 'POST', body: $ringaEvent.detail[bodyParam]});
@@ -40,16 +40,16 @@ export default class APIController extends Ringa.Controller {
     // APIController.PUT
     this.addListener('PUT', ($ringaEvent, url, bodyParam) => {
       if (!$ringaEvent.detail[bodyParam]) {
-        throw new Error(`PUT Parameter was not provided on RingaEvent detail! ${bodyParam}`);
+        throw new Error(`PUT Parameter '${bodyParam}' was not provided on RingaEvent detail! `);
       }
 
-      return this.request({url, type: 'PUT', body: $ringaEvent.detail[bodyParam]});
+      return this.request({url, type: 'PUT', body: $ringaEvent.detail[bodyParam], id: $ringaEvent.detail[bodyParam].id});
     });
 
     // APIController.DELETE
     this.addListener('DELETE', ($ringaEvent, url, idParam) => {
       if (!$ringaEvent.detail[idParam]) {
-        throw new Error(`DELETE Parameter was not provided on RingaEvent detail! ${idParam}`);
+        throw new Error(`DELETE Parameter '${idParam}' was not provided on RingaEvent detail!`);
       }
 
       return this.request({url, type: 'DELETE', id: $ringaEvent.detail[idParam]});
@@ -67,13 +67,13 @@ export default class APIController extends Ringa.Controller {
     // APIController.GET_LIST
     this.addListener('getList', event(APIController.GET, {
       url: '/list',
-      idParam: 'id'
+      idParam: 'listId'
     }));
 
     // APIController.DEL_LIST
     this.addListener('delList', event(APIController.DELETE, {
       url: '/list',
-      idParam: 'id'
+      idParam: 'listId'
     }));
 
     // APIController.POST_LIST
@@ -84,25 +84,20 @@ export default class APIController extends Ringa.Controller {
 
     // APIController.PUT_LIST
     this.addListener('putList', event(APIController.PUT, {
-      url: '/lists',
+      url: '/list',
       bodyParam: 'list' // Expect dispatched RingaEvent::detail to have a 'list' property
     }));
 
     // APIController.GET_ITEMS
     this.addListener('getItems', event(APIController.GET, {
-      url: '/items'
+      url: '/items',
+      idParam: 'itemIds'
     }));
 
-    // APIController.GET_ITEM
-    this.addListener('getItem',  event(APIController.GET, {
+    // APIController.DELETE_ITEM
+    this.addListener('deleteItem', event(APIController.DELETE, {
       url: '/items',
-      idParam: 'id'
-    }));
-
-    // APIController.DEL_ITEM
-    this.addListener('delItem',  event(APIController.DELETE, {
-      url: '/items',
-      idParam: 'id'
+      idParam: 'itemId'
     }));
 
     // APIController.POST_ITEM
@@ -124,15 +119,17 @@ export default class APIController extends Ringa.Controller {
   request(props) {
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
-
-
       let url = `${API_ROOT}${props.url}`;
+
+      if (props.body && props.body.serialize) {
+        props.body = props.body.serialize();
+      }
 
       if (props.id) {
         url = `${url}/${props.id}`;
       }
 
-      console.log(`${props.type} ${url}`);
+      console.log(`${props.type} ${url}`, props.body);
 
       xhr.open(props.type, url, true);
 

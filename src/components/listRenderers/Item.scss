@@ -1,14 +1,23 @@
 .item {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.25em 0.25em;
-  padding: .25em .1em;
+  padding: 0.5em 0.5em;
   color: #222;
-  border: 1px solid #ccc;
+  background-color: white;
+  border-bottom: 1px solid #efefef;
+}
+
+.item:hover {
+  background-color: #e9f8dd;
 }
 
 .item--title {
+}
+
+.item input {
+  width: 100%;
 }
 
 .item--delete {

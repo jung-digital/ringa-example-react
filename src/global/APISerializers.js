@@ -7,5 +7,5 @@ export function SerializeLists($ringaEvent, appModel) {
     });
   }
 
-  appModel.lists = $ringaEvent.lastPromiseResult.map(List.deserialize);
+  $ringaEvent.detail.lists = appModel.lists = $ringaEvent.lastPromiseResult.map(List.deserialize);
 }

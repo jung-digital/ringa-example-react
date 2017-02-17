@@ -5,7 +5,7 @@ export default class Loader extends React.Component {
     // Loading...
     if (this.props.loading) {
       return <div className="loader-container loader-wrapper">
-        <div className="loader">Loading...</div>
+        <img src="/images/loader.gif" />
       </div>;
     }
 

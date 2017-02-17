@@ -1,16 +1,23 @@
 /* Base Application Styles */
 body {
-  color: #fff;
+  color: #f1fee6;
   background: #222;
   overflow: hidden;
   width: 100%;
   height: 100%;
+  font-family: "Open Sans", sans-serif;
 }
 
 .app {
   height: 100vh;
   width: 100vw;
   overflow: auto;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#025785+0,003a59+100 */
+  background: #025785; /* Old browsers */
+  background: -moz-linear-gradient(top,  #025785 0%, #003a59 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #025785 0%,#003a59 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #025785 0%,#003a59 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#025785', endColorstr='#003a59',GradientType=0 ); /* IE6-9 */
 }
 
 .overflow-hidden {
@@ -33,36 +40,8 @@ body {
   background: #666;
 }
 
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background: #bbb;
-}
-
-.header--title {
-  padding: 0em 1rem;
-}
-
-.header--links {
-  display: inherit;
-  align-items: center;
-  padding: 0em 1rem;
-  flex: 0 0 18em;
-  justify-content: space-between;
-}
-
-.header--link-group li {
-  display: block;
-}
-
-.header--link {
-  color: white;
-}
-
 .index {
   display: flex;
   flex-wrap: wrap;
-  padding: 2rem;
+  padding: 1rem;
 }

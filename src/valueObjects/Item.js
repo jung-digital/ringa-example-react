@@ -8,9 +8,20 @@ class Item extends Model {
   constructor(name, values) {
     super(name, values);
 
+    // DTO
     this.addProperty('title', '[TITLE NOT SET]');
     this.addProperty('description', '[DESCRIPTION NOT SET]');
     this.addProperty('order', 0);
+
+    // State management
+    this.addProperty('editing', false);
+    this.addProperty('saving', false);
+  }
+
+  serialize() {
+    return {
+      title: this.title
+    };
   }
 }
 
