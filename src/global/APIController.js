@@ -78,7 +78,7 @@ export default class APIController extends Ringa.Controller {
 
     // APIController.POST_LIST
     this.addListener('postList', event(APIController.POST, {
-      url: '/lists',
+      url: '/list',
       bodyParam: 'list' // Expect dispatched RingaEvent::detail to have a 'list' property
     }));
 
@@ -138,7 +138,13 @@ export default class APIController extends Ringa.Controller {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          let parsedResponse = xhr.response ? JSON.parse(xhr.response) : undefined;
+          let parsedResponse;
+
+          try {
+            parsedResponse = xhr.response ? JSON.parse(xhr.response) : undefined;
+          } catch (error) {
+
+          }
 
           console.log('API RESULT', props, parsedResponse);
 

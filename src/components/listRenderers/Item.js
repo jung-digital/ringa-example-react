@@ -6,21 +6,35 @@ import AppController from '../../global/AppController';
 import './Item.scss';
 
 export default class Item extends React.Component {
+  //-----------------------------------
+  // Constructor
+  //-----------------------------------
   constructor(props) {
     super(props);
 
-    watch(this, props.item, (what) => {
-      if (what === 'editing' && this.props.item.editing) {
-        this.focusInput = true;
-      }
-    });
-
-    this.focusInput = false;
+    watch(this, props.item);
 
     this.clickHandler = this.clickHandler.bind(this);
     this.deleteClickHandler = this.deleteClickHandler.bind(this);
     this.blurHandler = this.blurHandler.bind(this);
     this.inputKeyUpHandler = this.inputKeyUpHandler.bind(this);
+  }
+
+  //-----------------------------------
+  // Methods
+  //-----------------------------------
+  tryFocusInput() {
+    if (this.refs.input && this.refs.input !== document.activeElement) {
+      this.refs.input.focus();
+    }
+  }
+
+  componentDidUpdate() {
+    this.tryFocusInput();
+  }
+
+  componentDidMount() {
+    this.tryFocusInput();
   }
 
   render() {
@@ -38,13 +52,6 @@ export default class Item extends React.Component {
     </div>;
   }
 
-  componentDidUpdate() {
-    if (this.focusInput) {
-      this.refs.input.focus();
-      this.focusInput = false;
-    }
-  }
-
   save() {
     this.props.item.title = this.refs.input.value;
     this.props.item.editing = false;
@@ -55,9 +62,11 @@ export default class Item extends React.Component {
     }, this.refs.rootNode);
   }
 
+  //-----------------------------------
+  // Events
+  //-----------------------------------
   clickHandler() {
     this.props.item.editing = true;
-    this.focusInput = true;
   }
 
   inputKeyUpHandler(event) {

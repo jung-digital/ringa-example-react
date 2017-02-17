@@ -9,7 +9,7 @@ import PopupLoadingController from './popup/loading/PopupLoadingController';
 import PopupLoading from './popup/loading/PopupLoading';
 import AppModel from '../global/AppModel';
 import Header from './layout/Header';
-import List from './listRenderers/List';
+import Workspace from './layout/Workspace';
 
 import classnames from 'classnames';
 
@@ -25,15 +25,10 @@ class App extends React.Component {
     attach(this, new AppController());
     attach(this, new PopupLoadingController());
 
-    depend(this, [
-      dependency(AppModel, 'lists'),
-      dependency(AppModel, 'windowScrollAllowed')
-    ]);
+    depend(this, dependency(AppModel, 'windowScrollAllowed'));
   }
 
   render() {
-    let { lists = [] } = this.state;
-
     let classes = classnames({
       app: true,
       'overflow-hidden': !this.state.windowScrollAllowed
@@ -42,9 +37,7 @@ class App extends React.Component {
     return (
       <div ref="ringaComponent" className={classes}>
         <Header/>
-        <div className="index">
-          {lists.map(list => <List key={list.id} list={list} />)}
-        </div>
+        <Workspace/>
         <PopupLoading />
       </div>
     );

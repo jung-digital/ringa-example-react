@@ -9,6 +9,7 @@ import APIController from './APIController';
 import AppModel from './AppModel';
 
 import Item from '../valueObjects/Item';
+import List from '../valueObjects/List';
 
 export default class AppController extends Controller {
   constructor() {
@@ -35,24 +36,43 @@ export default class AppController extends Controller {
 
     // AppController.ADD_ITEM_TO_LIST
     this.addListener('addItemToList', [
-      ($ringaEvent, autoEdit) => {
+      ($ringaEvent) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
         $ringaEvent.detail.item = new Item();
       },
       APIController.POST_ITEM,
       ($lastPromiseResult, list, autoEdit) => {
         let newItem = Item.deserialize($lastPromiseResult);
-        list.pushItem(newItem);
         newItem.parentList = list;
         newItem.editing = autoEdit;
+
+        list.pushItem(newItem);
       },
       APIController.PUT_LIST
+    ]);
+
+    // AppController.ADD_LIST
+    this.addListener('addList', [
+      ($ringaEvent) => {
+        // Create an empty item to save, which is required by APIController.POST_ITEM
+        $ringaEvent.detail.list = new List();
+      },
+      APIController.POST_LIST,
+      ($lastPromiseResult, list, autoEdit, appModel) => {
+        let newList = List.deserialize($lastPromiseResult);
+        newList.editing = autoEdit;
+        newList.loading = false;
+
+        appModel.pushList(newList);
+      }
     ]);
 
     // AppController.DELETE_LIST
     this.addListener('deleteList', [
       APIController.DEL_LIST,
-      AppController.REFRESH_LISTS
+      (appModel, listId) => {
+        appModel.removeListById(listId);
+      }
     ]);
 
     // AppController.REFRESH_ITEMS_FOR_LIST
@@ -64,6 +84,8 @@ export default class AppController extends Controller {
       },
       iif(itemIds => itemIds && itemIds.length > 0, APIController.GET_ITEMS),
       iif($lastPromiseResult => $lastPromiseResult, ($lastPromiseResult, list) => {
+        list.destroyAllItems();
+
         list.items = $lastPromiseResult.map(item => {
           item = Item.deserialize(item);
           item.parentList = list;
@@ -86,7 +108,9 @@ export default class AppController extends Controller {
       },
       APIController.GET_LIST,
       ($lastPromiseResult, ix, $ringaEvent, appModel) => {
-        $ringaEvent.detail.list = appModel.lists[ix] = $lastPromiseResult;
+        appModel.lists[ix].destroy();
+
+        $ringaEvent.detail.list = appModel.lists[ix] = List.deserialize($lastPromiseResult);
       },
       AppController.REFRESH_ITEMS_FOR_LIST,
       (appModel) => {
@@ -97,6 +121,11 @@ export default class AppController extends Controller {
     // AppController.SAVE_ITEM
     this.addListener('saveItem', [
       APIController.PUT_ITEM
+    ]);
+
+    // AppController.SAVE_LIST
+    this.addListener('saveList', [
+      APIController.PUT_LIST
     ]);
 
     // AppController.REMOVE_ITEM
@@ -123,7 +152,8 @@ export default class AppController extends Controller {
   }
 
   busMounted() {
-    // We cannot dispatch until we know for sure the bus is ready to distribute our event!
+    // We cannot dispatch until we know for sure the event bus (in this case DOM node)
+    // is ready to dispatch our event!
     this.dispatch('initialize');
   }
 }

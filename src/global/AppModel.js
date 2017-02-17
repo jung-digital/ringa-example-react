@@ -1,6 +1,9 @@
 import {Model} from 'ringa';
 
 export default class AppModel extends Model {
+  //-----------------------------------
+  // Constructor
+  //-----------------------------------
   constructor() {
     super();
 
@@ -12,7 +15,34 @@ export default class AppModel extends Model {
     this.addProperty('editList', null); // Can only edit one list at once, so this is on the app model!
   }
 
+  //-----------------------------------
+  // Properties
+  //-----------------------------------
   get loading() {
     return this.loadCount !== 0;
+  }
+
+  //-----------------------------------
+  // Methods
+  //-----------------------------------
+  pushList(list) {
+    this.lists.push(list);
+    list.order = this.lists.length - 1;
+
+    this.notify('lists');
+  }
+
+  removeListById(id) {
+    let ix;
+
+    this.lists.forEach((list, _ix) => {
+      if (list.id === id) {
+        ix = _ix;
+      }
+    });
+
+    this.lists.splice(ix, 1);
+
+    this.notify('lists');
   }
 }

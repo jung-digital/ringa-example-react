@@ -2,9 +2,12 @@ import {Model} from 'ringa';
 import _ from 'lodash';
 
 /**
- * Item is a Ringa Model that contains the values
+ * Item is a Ringa Model that contains the values for a single item in a list.
  */
 class Item extends Model {
+  //-----------------------------------
+  // Constructor
+  //-----------------------------------
   constructor(name, values) {
     super(name, values);
 
@@ -18,6 +21,9 @@ class Item extends Model {
     this.addProperty('saving', false);
   }
 
+  //-----------------------------------
+  // Methods
+  //-----------------------------------
   serialize() {
     return {
       title: this.title

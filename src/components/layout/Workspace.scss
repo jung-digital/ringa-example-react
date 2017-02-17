@@ -1,0 +1,35 @@
+.workspace img {
+  position: relative;
+  margin: 40px auto;
+  border-radius: 4px;
+  background: #fff;
+  display: block;
+}
+
+.workspace .notice {
+  margin: 20px auto;
+  padding: 15px 0;
+  text-align: center;
+  border: 1px solid #000;
+  border-width: 1px 0;
+  background: #666;
+}
+
+.workspace {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.workspace .add-list {
+  color: white;
+  position: fixed;
+  width: 100px;
+  right: 1rem;
+  bottom: 1rem;
+  text-align: center;
+  background: #a3d977;
+  padding: 0.5em 0em;
+  cursor: pointer;
+  border-bottom-right-radius: 15px;
+}
