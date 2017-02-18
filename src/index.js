@@ -11,9 +11,9 @@ const query = qp.decode(window.location.search.substr(1));
 const token = query.token || shortid.generate();
 
 const newSearch = `?token=${token}`;
-if (window.location.search !== newSearch){
-  window.location.search = newSearch;
-}
+
+var newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + newSearch;
+window.history.pushState({path:newURL},'',newURL);
 
 // Render the main component into the dom
 ReactDOM.render(<App token={token} />, document.getElementById('app'));

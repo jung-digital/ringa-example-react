@@ -145,7 +145,9 @@ export default class AppController extends Controller {
     // AppController.INITIALIZE
     this.addListener('initialize', [
       PopupLoadingController.show('Loading Lists...'),
+      200,
       AppController.REFRESH_LISTS,
+      appModel => {appModel.initialized = true;},
       PopupLoadingController.hide(),
       forEachParallel('lists', 'list', AppController.REFRESH_ITEMS_FOR_LIST)
     ]);

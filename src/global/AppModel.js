@@ -11,6 +11,7 @@ export default class AppModel extends Model {
     this.addProperty('lists', []);
     this.addProperty('windowScrollAllowed', true);
 
+    this.addProperty('initialized', false);
     this.addProperty('editItem', null); // Can only edit one item at once, so this is on the app model!
     this.addProperty('editList', null); // Can only edit one list at once, so this is on the app model!
   }

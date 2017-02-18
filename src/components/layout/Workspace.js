@@ -15,7 +15,10 @@ export default class Workspace extends React.Component {
   constructor(props) {
     super(props);
 
-    depend(this, dependency(AppModel, 'lists'));
+    depend(this, [
+      dependency(AppModel, 'lists'),
+      dependency(AppModel, 'initialized')
+    ]);
 
     this.addListClickHandler = this.addListClickHandler.bind(this);
   }
@@ -24,7 +27,11 @@ export default class Workspace extends React.Component {
   // Methods
   //-----------------------------------
   render() {
-    let { lists = [] } = this.state;
+    let { lists = [], initialized = false } = this.state;
+
+    if (!initialized) {
+      return <div className="workspace" ref="root"></div>;
+    }
 
     return <div className="workspace" ref="root">
       {lists.length === 0 ? <Intro /> : lists.map(list => <List key={list.id} list={list} />)}
