@@ -10,14 +10,6 @@ module.exports = {
     filename: 'app.js',
     publicPath: defaultSettings.publicPath
   },
-  devServer: {
-    contentBase: './src/',
-    historyApiFallback: true,
-    hot: true,
-    port: defaultSettings.port,
-    publicPath: defaultSettings.publicPath,
-    noInfo: false
-  },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {

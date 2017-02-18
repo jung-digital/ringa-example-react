@@ -10,6 +10,14 @@ let config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
   cache: false,
   devtool: 'sourcemap',
+  devServer: {
+    contentBase: './src/',
+    historyApiFallback: true,
+    hot: false,
+    port: defaultSettings.port,
+    publicPath: defaultSettings.publicPath,
+    noInfo: false
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
