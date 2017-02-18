@@ -18,7 +18,7 @@ let config = Object.assign({}, baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      'process.env.API_ROOT': JSON.stringify(process.env.API_ROOT || 'http://localhost:9000')
+      'process.env.API_ROOT': '"http://example-server.ringajs.com"'
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false},
