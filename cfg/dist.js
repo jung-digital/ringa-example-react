@@ -10,7 +10,7 @@ let config = Object.assign({}, baseConfig, {
   output: {
     path: path.join(__dirname, '/../dist/assets'),
     filename: 'app.js',
-    publicPath: 'http://demo.ringajs.com/'
+    publicPath: 'http://demo.ringajs.com/assets/'
   },
   entry: path.join(__dirname, '../src/index'),
   cache: false,
