@@ -5,11 +5,6 @@ require('dotenv').config();
 
 module.exports = {
   devtool: 'eval',
-  output: {
-    path: path.join(__dirname, '/../dist/assets'),
-    filename: 'app.js',
-    publicPath: defaultSettings.publicPath
-  },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {

@@ -118,8 +118,7 @@ export default class List extends React.Component {
   addItemClickHandler() {
     dispatch(AppController.ADD_ITEM_TO_LIST, {
       list: this.props.list,
-      autoEdit: true,
-      someProperty: 'blah'
+      autoEdit: true
     }, this.refs.root);
   }
 

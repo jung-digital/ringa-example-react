@@ -7,17 +7,14 @@ let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
 
 let config = Object.assign({}, baseConfig, {
+  output: {
+    path: path.join(__dirname, '/../dist/assets'),
+    filename: 'app.js',
+    publicPath: 'http://demo.ringajs.com/'
+  },
   entry: path.join(__dirname, '../src/index'),
   cache: false,
   devtool: 'sourcemap',
-  devServer: {
-    contentBase: './src/',
-    historyApiFallback: true,
-    hot: false,
-    port: defaultSettings.port,
-    publicPath: defaultSettings.publicPath,
-    noInfo: false
-  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',

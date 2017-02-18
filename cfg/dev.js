@@ -6,6 +6,11 @@ let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
 
 let config = Object.assign({}, baseConfig, {
+  output: {
+    path: path.join(__dirname, '/../dist/assets'),
+    filename: 'app.js',
+    publicPath: defaultSettings.publicPath
+  },
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
     'webpack/hot/only-dev-server',

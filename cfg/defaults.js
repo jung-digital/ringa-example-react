@@ -44,16 +44,13 @@ function getDefaultModules() {
         ]
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2)$/,
+        test: /\.(png|jpg|woff|woff2)$/,
         use: {
-          loader: 'url-loader',
-          options: {
-            limit:8192
-          }
+          loader: 'url-loader'
         }
       },
       {
-        test: /\.(mp4|ogg|svg)$/,
+        test: /\.(gif|mp4|ogg|svg)$/,
         use: [
           'file-loader'
         ]
