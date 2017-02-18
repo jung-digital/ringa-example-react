@@ -58,4 +58,14 @@ export default class AppModel extends Model {
 
     this.notify('lists');
   }
+
+  startEditItem(item) {
+    item.editing = true;
+    this.editItem = item;
+  }
+
+  endEditItem(item) {
+    item.editing = false;
+    this.editItem = undefined;
+  }
 }

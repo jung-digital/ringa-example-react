@@ -41,10 +41,11 @@ export default class AppController extends Controller {
         $ringaEvent.detail.item = new Item();
       },
       APIController.POST_ITEM,
-      ($lastPromiseResult, list, autoEdit) => {
+      ($lastPromiseResult, list, autoEdit, appModel) => {
         let newItem = Item.deserialize($lastPromiseResult);
         newItem.parentList = list;
-        newItem.editing = autoEdit;
+
+        appModel.startEditItem(newItem);
 
         list.pushItem(newItem);
       },
@@ -139,6 +140,9 @@ export default class AppController extends Controller {
 
     // AppController.SAVE_ITEM
     this.addListener('saveItem', [
+      (appModel, item) => {
+        appModel.endEditItem(item);
+      },
       iif(item => item.title === '', AppController.REMOVE_ITEM, APIController.PUT_ITEM)
     ]);
 

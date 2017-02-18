@@ -20,7 +20,6 @@ export default class Intro extends React.Component {
 
 
       <div>To keep the demo simple, each session is assigned a token and all activity in the session is associated with the token. Sessions are not designed to be shared between browsers or errors will occur.</div>
-      <div>To get started, click to add a list in the lower right corner. This works a little like <a href="http://www.trello.com" target="_blank">Trello</a> and you should be able to figure it out easily.</div>
     </div>;
   }
 }

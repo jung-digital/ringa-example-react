@@ -1,14 +1,11 @@
+@import '../../styles/variables';
+
 .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00304a+0,00547f+69,006599+95,2081b2+100 */
-  background: #00304a; /* Old browsers */
-  background: -moz-linear-gradient(top,  #00304a 0%, #00547f 69%, #006599 95%, #2081b2 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  #00304a 0%,#00547f 69%,#006599 95%,#2081b2 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  #00304a 0%,#00547f 69%,#006599 95%,#2081b2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00304a', endColorstr='#2081b2',GradientType=0 ); /* IE6-9 */
+  background: $header-1;
 }
 
 .header--title {

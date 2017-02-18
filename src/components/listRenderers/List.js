@@ -5,6 +5,9 @@ import {dispatch} from 'ringa';
 import {watch} from 'react-ringa';
 
 import AppController from '../../global/AppController';
+import AppModel from '../../global/AppModel';
+
+import {depend, dependency} from 'react-ringa';
 
 import Loader from '../decorators/Loader';
 import Item from './Item';
@@ -17,6 +20,8 @@ export default class List extends React.Component {
     super(props);
 
     this.watch(props);
+
+    depend(this, dependency(AppModel, 'editItem'));
 
     this.addItemClickHandler = this.addItemClickHandler.bind(this);
     this.deleteListClickHandler = this.deleteListClickHandler.bind(this);
@@ -77,6 +82,7 @@ export default class List extends React.Component {
 
   render() {
     let { id, title, description, items, loading, editing } = this.props.list;
+    let { editItem } = this.state;
 
     let header = editing ?
       <div className="list--header" onClick={this.headerClickHandler}>
@@ -89,8 +95,8 @@ export default class List extends React.Component {
       </div>
       :
       <div className="list--header list--header-not-editing" onClick={this.headerClickHandler}>
-        <div className="list--title">{title}
-          <div className="item--delete" onClick={this.deleteListClickHandler}>
+        <div className="list--title list--title-text">{title}
+          <div className="list--delete" onClick={this.deleteListClickHandler}>
             <i className="fa fa-times-circle" aria-hidden="true"></i>
           </div>
         </div>
@@ -105,9 +111,9 @@ export default class List extends React.Component {
               <div className="list--items">
                 {items.map(item => <Item key={item || item.id} item={item} />)}
               </div>
-              <div className="list--add-item" onClick={this.addItemClickHandler}>+</div>
             </Loader>
           </div>
+          {editItem ? null : <div className="list--add-item" onClick={this.addItemClickHandler}>+ Item</div>}
         </div>
       </div>;
   }
