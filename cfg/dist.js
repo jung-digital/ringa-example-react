@@ -28,7 +28,7 @@ let config = Object.assign({}, baseConfig, {
       output: {comments: false},
       sourceMap: true,
       mangle: {
-        except: ["$controller","$customEvent","$detail","$lastEvent","$lastPromiseError","$lastPromiseResult","$ringaEvent","$target","$thread","APIController","AppController","AppModel","AppModel1","EventExecutor","ForEachExecutor","FunctionExecutor","IifExecutor","IntervalExecutor","Item","List","ModelWatcher","PopupLoadingController","PopupLoadingModel","PopupLoadingModel1","PopupLoadingModel2","RingaEvent","Thread","ThreadFactory","_executor","appModel","done","fail","idParam","itemIds","list","lists","message","popupLoadingModel","popupModel","requireCatch","ringaEvent","url"]
+        except: ["$controller","$customEvent","$detail","$lastEvent","$lastPromiseError","$lastPromiseResult","$ringaEvent","$target","$thread","APIController","AppController","AppModel","AppModel1","EventExecutor","ForEachExecutor","FunctionExecutor","IifExecutor","IntervalExecutor","Item","List","ModelWatcher","PopupLoadingController","PopupLoadingModel","PopupLoadingModel1","PopupLoadingModel2","RingaEvent","Thread","ThreadFactory","_executor","appModel","autoEdit","bodyParam","done","fail","idParam","item","itemIds","list","listId","lists","message","popupLoadingModel","popupModel","requireCatch","ringaEvent","someProperty","url", "ix"]
       }
     }),
     new webpack.optimize.AggressiveMergingPlugin()
