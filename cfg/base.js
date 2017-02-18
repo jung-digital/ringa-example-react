@@ -1,6 +1,7 @@
 'use strict';
 let path = require('path');
 let defaultSettings = require('./defaults');
+require('dotenv').config();
 
 module.exports = {
   devtool: 'eval',

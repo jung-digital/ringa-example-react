@@ -1,6 +1,6 @@
 import Ringa, {event} from 'ringa';
 
-let API_ROOT = process.env.API_ROOT || 'http://localhost:9000';
+let API_ROOT = process.env.API_ROOT;
 
 /**
  * APIController

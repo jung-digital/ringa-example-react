@@ -64,6 +64,8 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "core-js": "^2.0.0",
+    "dot-env": "0.0.1",
+    "dotenv": "^4.0.0",
     "hasharray": "^1.0.0",
     "lodash": "^4.17.4",
     "normalize.css": "^4.0.0",

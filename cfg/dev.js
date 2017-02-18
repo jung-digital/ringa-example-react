@@ -14,7 +14,10 @@ let config = Object.assign({}, baseConfig, {
   cache: true,
   devtool: 'source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.API_ROOT': JSON.stringify(process.env.API_ROOT || 'http://localhost:9000')
+    })
   ],
   module: defaultSettings.getDefaultModules()
 });
