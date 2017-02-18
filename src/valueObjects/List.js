@@ -13,8 +13,8 @@ class List extends Model {
   constructor(name, values) {
     super(name, values);
 
-    this.addProperty('title', '[TITLE NOT SET]');
-    this.addProperty('description', '[DESCRIPTION NOT SET]');
+    this.addProperty('title', '');
+    this.addProperty('description', '');
     this.addProperty('order', 0);
     this.addProperty('items', []);
 
