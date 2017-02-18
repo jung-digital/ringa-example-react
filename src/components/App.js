@@ -16,12 +16,15 @@ import classnames from 'classnames';
 import {attach, depend, dependency} from 'react-ringa';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {};
 
-    attach(this, new APIController());
+    console.log('%cStarting Ringa Example ReactJS Application!', 'color: blue; font-weight: bold;');
+    console.log(`%cUsing token '${props.token}'. Tokens are not designed to be shared across active sessions due to data corruption, so you are forewarned.`, 'color: blue; font-weight: bold;');
+
+    attach(this, new APIController(props.token));
     attach(this, new AppController());
     attach(this, new PopupLoadingController());
 

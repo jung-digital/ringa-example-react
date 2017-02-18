@@ -3,6 +3,7 @@ import './Workspace.scss';
 import AppModel from '../../global/AppModel';
 import AppController from '../../global/AppController';
 import List from '../listRenderers/List';
+import Intro from './Intro';
 
 import {dispatch} from 'ringa';
 import {depend, dependency} from 'react-ringa';
@@ -26,7 +27,7 @@ export default class Workspace extends React.Component {
     let { lists = [] } = this.state;
 
     return <div className="workspace" ref="root">
-      {lists.map(list => <List key={list.id} list={list} />)}
+      {lists.length === 0 ? <Intro /> : lists.map(list => <List key={list.id} list={list} />)}
       <button className="add-list" onClick={this.addListClickHandler}>+ List</button>
     </div>;
   }

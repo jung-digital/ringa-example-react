@@ -1,4 +1,4 @@
-import {Controller, forEachParallel, iif} from 'ringa';
+import {Controller, forEachParallel, iif, stop} from 'ringa';
 
 import PopupLoadingController from '../components/popup/loading/PopupLoadingController';
 import PopupLoadingModel from '../components/popup/loading/PopupLoadingModel';
@@ -118,11 +118,6 @@ export default class AppController extends Controller {
       }
     ]);
 
-    // AppController.SAVE_ITEM
-    this.addListener('saveItem', [
-      APIController.PUT_ITEM
-    ]);
-
     // AppController.SAVE_LIST
     this.addListener('saveList', [
       APIController.PUT_LIST
@@ -140,6 +135,11 @@ export default class AppController extends Controller {
       APIController.DELETE_ITEM,
       APIController.PUT_LIST,
       AppController.REFRESH_LIST
+    ]);
+
+    // AppController.SAVE_ITEM
+    this.addListener('saveItem', [
+      iif(item => item.title === '', AppController.REMOVE_ITEM, APIController.PUT_ITEM)
     ]);
 
     // AppController.INITIALIZE

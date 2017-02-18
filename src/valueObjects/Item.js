@@ -12,8 +12,7 @@ class Item extends Model {
     super(name, values);
 
     // DTO
-    this.addProperty('title', '[TITLE NOT SET]');
-    this.addProperty('description', '[DESCRIPTION NOT SET]');
+    this.addProperty('title', '');
     this.addProperty('order', 0);
 
     // State management

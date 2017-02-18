@@ -79,7 +79,8 @@ class List extends Model {
       title: this.title,
       description: this.description,
       items: this.items.map(item => item.id),
-      order: this.order
+      order: this.order,
+      token: this.token
     };
   }
 }

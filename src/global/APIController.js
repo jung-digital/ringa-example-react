@@ -9,10 +9,12 @@ export default class APIController extends Ringa.Controller {
   //-----------------------------------
   // Constructor
   //-----------------------------------
-  constructor(domNode) {
-    super('APIController', domNode, {
+  constructor(token) {
+    super('APIController', undefined, {
       timeout: 5000
     });
+
+    this.token = token;
 
     //------------------------------------
     // GET, POST, PUT, DELETE
@@ -58,10 +60,9 @@ export default class APIController extends Ringa.Controller {
     //------------------------------------
     // Lists / Items CRUD
     //------------------------------------
-
     // APIController.GET_LISTS
     this.addListener('getLists', event(APIController.GET, {
-      url: '/list'
+      url: `/list/token/${this.token}`
     }));
 
     // APIController.GET_LIST
@@ -77,10 +78,13 @@ export default class APIController extends Ringa.Controller {
     }));
 
     // APIController.POST_LIST
-    this.addListener('postList', event(APIController.POST, {
+    this.addListener('postList', [(list) => {
+      list.token = this.token;
+      console.log('SAVING', list.serialize(), this.token);
+    }, event(APIController.POST, {
       url: '/list',
       bodyParam: 'list' // Expect dispatched RingaEvent::detail to have a 'list' property
-    }));
+    })]);
 
     // APIController.PUT_LIST
     this.addListener('putList', event(APIController.PUT, {
