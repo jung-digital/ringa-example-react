@@ -12,31 +12,15 @@ let config = Object.assign({}, baseConfig, {
   devtool: 'sourcemap',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"',
+      'process.env.API_ROOT': JSON.stringify(process.env.API_ROOT || 'http://localhost:9000')
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false},
       output: {comments: false},
       sourceMap: true,
       mangle: {
-        except: [
-          '$controller',
-          '$thread',
-          '$ringaEvent',
-          '$lastEvent',
-          '$customEvent',
-          '$target',
-          '$detail',
-          'done',
-          'fail',
-          '$lastPromiseResult',
-          '$lastPromiseError',
-          'url',
-          'bodyParam',
-          'idParam',
-          'message',
-          'loadingOverlayModel',
-          'applicationModel']
+        except: ["$controller","$customEvent","$detail","$lastEvent","$lastPromiseError","$lastPromiseResult","$ringaEvent","$target","$thread","APIController","AppController","AppModel","AppModel1","EventExecutor","ForEachExecutor","FunctionExecutor","IifExecutor","IntervalExecutor","Item","List","ModelWatcher","PopupLoadingController","PopupLoadingModel","PopupLoadingModel1","PopupLoadingModel2","RingaEvent","Thread","ThreadFactory","_executor","appModel","done","fail","idParam","itemIds","list","lists","message","popupLoadingModel","popupModel","requireCatch","ringaEvent","url"]
       }
     }),
     new webpack.optimize.AggressiveMergingPlugin()
@@ -44,11 +28,12 @@ let config = Object.assign({}, baseConfig, {
   module: defaultSettings.getDefaultModules()
 });
 
-// Add needed loaders to the defaults here
 config.module.rules.push({
   test: /\.(js|jsx)$/,
-  loader: 'babel',
-  include: path.join(__dirname, '/../src')
+  include: path.join(__dirname, '/../src'),
+  use: [
+    'babel-loader'
+  ]
 });
 
 module.exports = config;
