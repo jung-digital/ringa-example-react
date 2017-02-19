@@ -79,8 +79,6 @@ export default class AppController extends Controller {
     this.addListener('refreshItemsForList', [
       ($detail, list) => {
         $detail.itemIds = list.itemIds;
-
-        list.loading = true;
       },
       iif(itemIds => itemIds && itemIds.length > 0, APIController.GET_ITEMS),
       iif($lastPromiseResult => $lastPromiseResult, ($lastPromiseResult, list) => {
@@ -152,7 +150,6 @@ export default class AppController extends Controller {
     // AppController.INITIALIZE
     this.addListener('initialize', [
       PopupLoadingController.show('Loading Lists...'),
-      200,
       AppController.REFRESH_LISTS,
       appModel => {appModel.initialized = true;},
       PopupLoadingController.hide(),

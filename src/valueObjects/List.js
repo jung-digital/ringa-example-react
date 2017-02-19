@@ -19,7 +19,7 @@ class List extends Model {
     this.addProperty('items', []);
 
     // Set to true when the child items are loading so we can display a loader on the list.
-    this.addProperty('loading', true);
+    this.addProperty('loading', values.items.length !== 0);
     this.addProperty('editing', false);
   }
 
