@@ -8,6 +8,15 @@
   background: $header-1;
 }
 
+.header img {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.header img.show {
+  opacity: 1;
+}
+
 .header--title {
   padding: 0em 1rem;
 }

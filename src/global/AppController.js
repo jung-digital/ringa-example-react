@@ -13,7 +13,9 @@ import List from '../valueObjects/List';
 
 export default class AppController extends Controller {
   constructor() {
-    super('AppController');
+    super('AppController', undefined, {
+      timeout: 5000
+    });
 
     this.addModel(new PopupLoadingModel());
     this.addModel(new AppModel());

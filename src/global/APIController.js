@@ -1,4 +1,5 @@
 import Ringa, {event} from 'ringa';
+import APIModel from './APIModel';
 
 let API_ROOT = process.env.API_ROOT;
 
@@ -11,8 +12,12 @@ export default class APIController extends Ringa.Controller {
   //-----------------------------------
   constructor(token) {
     super('APIController', undefined, {
-      timeout: 5000
+      timeout: 10000
     });
+
+    this.apiModel = new APIModel();
+
+    this.addModel(this.apiModel);
 
     this.token = token;
 
@@ -20,42 +25,67 @@ export default class APIController extends Ringa.Controller {
     // GET, POST, PUT, DELETE
     //------------------------------------
 
-    // APIController.GET
-    this.addListener('GET', ($ringaEvent, url) => {
-      let idParam = $ringaEvent.detail.idParam;
-      if (idParam && !$ringaEvent.detail[idParam]) {
-        throw new Error(`GET Parameter '${idParam}' was not provided on RingaEvent detail!`);
-      }
+    let startRequest = (apiModel) => {
+      apiModel.calls++;
+      apiModel.activeCalls++;
+    };
 
-      return this.request({url, type: 'GET', id: $ringaEvent.detail[idParam]});
-    });
+    let finRequest = (apiModel) => {
+      apiModel.activeCalls--;
+    };
+
+    // APIController.GET
+    this.addListener('GET', [
+        startRequest,
+        ($ringaEvent, url) => {
+          let idParam = $ringaEvent.detail.idParam;
+          if (idParam && !$ringaEvent.detail[idParam]) {
+            throw new Error(`GET Parameter '${idParam}' was not provided on RingaEvent detail!`);
+          }
+
+          return this.request({url, type: 'GET', id: $ringaEvent.detail[idParam]});
+        },
+        finRequest
+    ]);
 
     // APIController.POST
-    this.addListener('POST', ($ringaEvent, url, bodyParam) => {
-      if (!$ringaEvent.detail[bodyParam]) {
-        throw new Error(`POST Parameter '${bodyParam}' was not provided on RingaEvent detail!`);
-      }
+    this.addListener('POST', [
+      startRequest,
+      ($ringaEvent, url, bodyParam) => {
+        if (!$ringaEvent.detail[bodyParam]) {
+          throw new Error(`POST Parameter '${bodyParam}' was not provided on RingaEvent detail!`);
+        }
 
-      return this.request({url, type: 'POST', body: $ringaEvent.detail[bodyParam]});
-    });
+        return this.request({url, type: 'POST', body: $ringaEvent.detail[bodyParam]});
+      },
+      finRequest
+    ]);
 
     // APIController.PUT
-    this.addListener('PUT', ($ringaEvent, url, bodyParam) => {
-      if (!$ringaEvent.detail[bodyParam]) {
-        throw new Error(`PUT Parameter '${bodyParam}' was not provided on RingaEvent detail! `);
-      }
+    this.addListener('PUT', [
+      startRequest,
+      ($ringaEvent, url, bodyParam) => {
+        if (!$ringaEvent.detail[bodyParam]) {
+          throw new Error(`PUT Parameter '${bodyParam}' was not provided on RingaEvent detail! `);
+        }
 
-      return this.request({url, type: 'PUT', body: $ringaEvent.detail[bodyParam], id: $ringaEvent.detail[bodyParam].id});
-    });
+        return this.request({url, type: 'PUT', body: $ringaEvent.detail[bodyParam], id: $ringaEvent.detail[bodyParam].id});
+      },
+      finRequest
+    ]);
 
     // APIController.DELETE
-    this.addListener('DELETE', ($ringaEvent, url, idParam) => {
-      if (!$ringaEvent.detail[idParam]) {
-        throw new Error(`DELETE Parameter '${idParam}' was not provided on RingaEvent detail!`);
-      }
+    this.addListener('DELETE', [
+      startRequest,
+      ($ringaEvent, url, idParam) => {
+        if (!$ringaEvent.detail[idParam]) {
+          throw new Error(`DELETE Parameter '${idParam}' was not provided on RingaEvent detail!`);
+        }
 
-      return this.request({url, type: 'DELETE', id: $ringaEvent.detail[idParam]});
-    });
+        return this.request({url, type: 'DELETE', id: $ringaEvent.detail[idParam]});
+      },
+      finRequest
+    ]);
 
     //------------------------------------
     // Lists / Items CRUD
