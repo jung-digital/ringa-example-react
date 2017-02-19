@@ -21,6 +21,8 @@ class App extends React.Component {
 
     this.state = {};
 
+    this.mounted = false;
+
     console.log('%cStarting Ringa Example ReactJS Application!', 'color: blue; font-weight: bold;');
     console.log(`%cUsing token '${props.token}'. Tokens are not designed to be shared across active sessions due to data corruption, so you are forewarned.`, 'color: blue; font-weight: bold;');
 
@@ -31,9 +33,14 @@ class App extends React.Component {
     depend(this, dependency(AppModel, 'windowScrollAllowed'));
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   render() {
     let classes = classnames({
       app: true,
+      show: this.mounted,
       'overflow-hidden': !this.state.windowScrollAllowed
     });
 
