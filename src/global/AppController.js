@@ -187,7 +187,7 @@ export default class AppController extends Controller {
       forEachParallel('lists', 'list', AppController.REFRESH_ITEMS_FOR_LIST)
     ]);
 
-    this.addListener('mousedown', [
+    this.addListener('click', [
       (appModel, $ringaEvent) => {
         if ($ringaEvent.event.target.nodeName === 'INPUT') {
           return;
