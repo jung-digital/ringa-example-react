@@ -12,14 +12,13 @@ let config = Object.assign({}, baseConfig, {
     publicPath: defaultSettings.publicPath
   },
   entry: [
-    'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
+    'webpack-dev-server/client?http://192.168.1.138:' + defaultSettings.port,
     'webpack/hot/only-dev-server',
     './src/index'
   ],
   devServer: {
     contentBase: './src/',
     historyApiFallback: true,
-    hot: true,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
     noInfo: false

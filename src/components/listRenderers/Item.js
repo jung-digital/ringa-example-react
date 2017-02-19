@@ -1,7 +1,8 @@
 import React from 'react';
 import {dispatch} from 'ringa';
-import {watch} from 'react-ringa';
+import {watch, find } from 'react-ringa';
 import AppController from '../../global/AppController';
+import AppModel from '../../global/AppModel';
 
 import './Item.scss';
 
@@ -34,6 +35,8 @@ export default class Item extends React.Component {
   }
 
   componentDidMount() {
+    this.appModel = find(this, AppModel);
+
     this.tryFocusInput();
   }
 
@@ -43,6 +46,7 @@ export default class Item extends React.Component {
     if (editing) {
       return <div className="item" ref="rootNode">
         <input ref="input" defaultValue={title} onBlur={this.blurHandler} onKeyUp={this.inputKeyUpHandler} />
+        <div className="item--delete" onClick={this.deleteClickHandler}><i className="fa fa-times-circle" aria-hidden="true"></i></div>
       </div>;
     }
 
@@ -67,7 +71,7 @@ export default class Item extends React.Component {
   // Events
   //-----------------------------------
   clickHandler() {
-    this.props.item.editing = true;
+    this.appModel.startEditItem(this.props.item);
   }
 
   inputKeyUpHandler(event) {
@@ -82,6 +86,10 @@ export default class Item extends React.Component {
 
   deleteClickHandler(event) {
     event.stopPropagation();
+
+    if (this.props.item.editing) {
+      this.appModel.endEditItem();
+    }
 
     dispatch(AppController.REMOVE_ITEM, {
       item: this.props.item

@@ -7,15 +7,6 @@
   display: block;
 }
 
-.workspace .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
-}
-
 .workspace {
   display: flex;
   flex-wrap: wrap;
@@ -33,4 +24,17 @@
   border: none;
   background: none;
   border: $action-border;
+  transition: $transition-fade;
+}
+
+.workspace button.add-list.hide {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .workspace {
+    display: block;
+    padding: 1rem;
+  }
 }

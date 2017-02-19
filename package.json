@@ -71,8 +71,8 @@
     "query-params": "0.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.0.0",
-    "react-ringa": "^0.0.24",
-    "ringa": "^0.0.24",
+    "react-ringa": "^0.0.28",
+    "ringa": "^0.0.28",
     "shortid": "^2.2.6",
     "webpack": "^2.2.0"
   }

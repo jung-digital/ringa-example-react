@@ -64,8 +64,22 @@ export default class AppModel extends Model {
     this.editItem = item;
   }
 
-  endEditItem(item) {
-    item.editing = false;
-    this.editItem = undefined;
+  endEditItem() {
+    if (this.editItem) {
+      this.editItem.editing = false;
+      this.editItem = undefined;
+    }
+  }
+
+  startEditList(list) {
+    list.editing = true;
+    this.editList = list;
+  }
+
+  endEditList() {
+    if (this.editList) {
+      this.editList.editing = false;
+      this.editList = undefined;
+    }
   }
 }

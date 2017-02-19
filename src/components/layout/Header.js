@@ -22,7 +22,7 @@ export default class Header extends React.Component {
 
     return <div className="header">
       <h1 className="header--title">Ringa Demo <img className={loaderClassnames} width="25" height="25" src={loaderGIF}/></h1>
-      <h3 className="header--title">Alpha ReactJS Version</h3>
+      <h3 className="header--sub-title">Alpha ReactJS Version</h3>
       <div className="header--links">
         <div className="header--link-group">
           <ul>
@@ -32,7 +32,6 @@ export default class Header extends React.Component {
           </ul>
         </div>
         <a className="header--link" href="https://github.com/jung-digital/ringa/wiki">wiki</a>
-        <div style={{width: '130px'}}/>
       </div>
     </div>;
   }

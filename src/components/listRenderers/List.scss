@@ -74,10 +74,12 @@
   border: $action-border;
   padding: 0.5em 0em;
   cursor: pointer;
+  transition: $transition-fade;
 }
 
 .list--add-item.hide {
-  opacity: 0;
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 .list--items {

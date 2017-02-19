@@ -20,23 +20,31 @@ export default class AppController extends Controller {
     this.addModel(new PopupLoadingModel());
     this.addModel(new AppModel());
 
+    //---------------------------------
     // AppController.SHOW_POPUP
+    //---------------------------------
     this.addListener('showPopup', appModel => {
       appModel.windowScrollAllowed = false;
     });
 
+    //---------------------------------
     // AppController.HIDE_POPUP
+    //---------------------------------
     this.addListener('hidePopup', appModel => {
       appModel.windowScrollAllowed = true;
     });
 
+    //---------------------------------
     // AppController.REFRESH_LISTS
+    //---------------------------------
     this.addListener('refreshLists', [
       APIController.GET_LISTS,
       SerializeLists
     ]);
 
+    //---------------------------------
     // AppController.ADD_ITEM_TO_LIST
+    //---------------------------------
     this.addListener('addItemToList', [
       ($ringaEvent) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
@@ -53,7 +61,9 @@ export default class AppController extends Controller {
       APIController.PUT_LIST
     ]);
 
+    //---------------------------------
     // AppController.ADD_LIST
+    //---------------------------------
     this.addListener('addList', [
       ($ringaEvent) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
@@ -62,14 +72,18 @@ export default class AppController extends Controller {
       APIController.POST_LIST,
       ($lastPromiseResult, list, autoEdit, appModel) => {
         let newList = List.deserialize($lastPromiseResult);
-        newList.editing = autoEdit;
+        if (autoEdit) {
+          appModel.startEditList(newList);
+        }
         newList.loading = false;
 
         appModel.pushList(newList);
       }
     ]);
 
+    //---------------------------------
     // AppController.DELETE_LIST
+    //---------------------------------
     this.addListener('deleteList', [
       APIController.DEL_LIST,
       (appModel, listId) => {
@@ -77,7 +91,9 @@ export default class AppController extends Controller {
       }
     ]);
 
+    //---------------------------------
     // AppController.REFRESH_ITEMS_FOR_LIST
+    //---------------------------------
     this.addListener('refreshItemsForList', [
       ($detail, list) => {
         $detail.itemIds = list.itemIds;
@@ -97,7 +113,9 @@ export default class AppController extends Controller {
       }
     ]);
 
+    //---------------------------------
     // AppController.REFRESH_LIST
+    //---------------------------------
     this.addListener('refreshList', [
       (listId, $ringaEvent, appModel) => {
         appModel.lists.forEach((list, ix) => {
@@ -118,13 +136,20 @@ export default class AppController extends Controller {
       }
     ]);
 
+    //---------------------------------
     // AppController.SAVE_LIST
+    //---------------------------------
     this.addListener('saveList', [
       iif(autoAddItem => autoAddItem, AppController.ADD_ITEM_TO_LIST),
-      APIController.PUT_LIST
+      APIController.PUT_LIST,
+      (appModel, list) => {
+        appModel.endEditList(list);
+      }
     ]);
 
+    //---------------------------------
     // AppController.REMOVE_ITEM
+    //---------------------------------
     this.addListener('removeItem', [
       (item, $ringaEvent) => {
         $ringaEvent.detail.itemId = item.id;
@@ -138,7 +163,9 @@ export default class AppController extends Controller {
       AppController.REFRESH_LIST
     ]);
 
+    //---------------------------------
     // AppController.SAVE_ITEM
+    //---------------------------------
     this.addListener('saveItem', [
       ($detail, appModel, item) => {
         $detail.list = item.parentList;
@@ -149,13 +176,26 @@ export default class AppController extends Controller {
         (appModel, item) => {appModel.endEditItem(item);})
     ]);
 
+    //---------------------------------
     // AppController.INITIALIZE
+    //---------------------------------
     this.addListener('initialize', [
       PopupLoadingController.show('Loading Lists...'),
       AppController.REFRESH_LISTS,
       appModel => {appModel.initialized = true;},
       PopupLoadingController.hide(),
       forEachParallel('lists', 'list', AppController.REFRESH_ITEMS_FOR_LIST)
+    ]);
+
+    this.addListener('click', [
+      (appModel, $ringaEvent) => {
+        if ($ringaEvent.event.target.nodeName === 'INPUT') {
+          return;
+        }
+
+        appModel.endEditItem();
+        appModel.endEditList();
+      }
     ]);
   }
 

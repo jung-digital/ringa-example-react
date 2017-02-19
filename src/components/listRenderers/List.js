@@ -2,7 +2,7 @@ import React from 'react';
 import './List.scss';
 
 import {dispatch} from 'ringa';
-import {watch} from 'react-ringa';
+import {watch, find} from 'react-ringa';
 import classnames from 'classnames';
 
 import AppController from '../../global/AppController';
@@ -22,7 +22,10 @@ export default class List extends React.Component {
 
     this.watch(props);
 
-    depend(this, dependency(AppModel, 'editItem'));
+    depend(this, [
+      dependency(AppModel, 'editItem'),
+      dependency(AppModel, 'editList')
+    ]);
 
     this.addItemClickHandler = this.addItemClickHandler.bind(this);
     this.deleteListClickHandler = this.deleteListClickHandler.bind(this);
@@ -39,7 +42,7 @@ export default class List extends React.Component {
     this.props.list.title = this.refs.inputTitle.value;
     this.props.list.description = this.refs.inputDescription.value;
 
-    this.props.list.editing = false;
+    this.appModel.endEditList(this.props.list);
 
     dispatch(AppController.SAVE_LIST, {
       list: this.props.list,
@@ -80,12 +83,14 @@ export default class List extends React.Component {
   }
 
   componentDidMount() {
+    this.appModel = find(this, AppModel);
+
     this.tryFocusEditing();
   }
 
   render() {
     let { id, title, description, items, loading, editing } = this.state.list;
-    let { editItem } = this.state;
+    let { editItem, editList } = this.state;
 
     let header = editing ?
       <div className="list--header" onClick={this.headerClickHandler}>
@@ -108,7 +113,7 @@ export default class List extends React.Component {
 
     let addClassNames = classnames({
       'list--add-item': true,
-      'hide': editItem
+      'hide': editItem || editList
     });
 
     return <div className="list" key={id} ref="root">
@@ -145,7 +150,7 @@ export default class List extends React.Component {
   }
 
   headerClickHandler() {
-    this.props.list.editing = true;
+    this.appModel.startEditList(this.props.list);
   }
 
   inputTitleBlurHandler() {
