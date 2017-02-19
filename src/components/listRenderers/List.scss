@@ -76,5 +76,9 @@
   cursor: pointer;
 }
 
+.list--add-item.hide {
+  opacity: 0;
+}
+
 .list--items {
 }

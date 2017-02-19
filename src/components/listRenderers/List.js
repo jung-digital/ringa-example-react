@@ -3,6 +3,7 @@ import './List.scss';
 
 import {dispatch} from 'ringa';
 import {watch} from 'react-ringa';
+import classnames from 'classnames';
 
 import AppController from '../../global/AppController';
 import AppModel from '../../global/AppModel';
@@ -41,7 +42,9 @@ export default class List extends React.Component {
     this.props.list.editing = false;
 
     dispatch(AppController.SAVE_LIST, {
-      list: this.props.list
+      list: this.props.list,
+      autoAddItem: this.props.list.items.length === 0,
+      autoEdit: true
     }, this.refs.root);
   }
 
@@ -81,7 +84,7 @@ export default class List extends React.Component {
   }
 
   render() {
-    let { id, title, description, items, loading, editing } = this.props.list;
+    let { id, title, description, items, loading, editing } = this.state.list;
     let { editItem } = this.state;
 
     let header = editing ?
@@ -95,13 +98,18 @@ export default class List extends React.Component {
       </div>
       :
       <div className="list--header list--header-not-editing" onClick={this.headerClickHandler}>
-        <div className="list--title list--title-text">{title}
+        <div className="list--title list--title-text">{title || 'Click to edit...'}
           <div className="list--delete" onClick={this.deleteListClickHandler}>
             <i className="fa fa-times-circle" aria-hidden="true"></i>
           </div>
         </div>
         <div className="list--description">{description}</div>
       </div>;
+
+    let addClassNames = classnames({
+      'list--add-item': true,
+      'hide': editItem
+    });
 
     return <div className="list" key={id} ref="root">
         <div className="list--container">
@@ -113,7 +121,7 @@ export default class List extends React.Component {
               </div>
             </Loader>
           </div>
-          {editItem ? null : <div className="list--add-item" onClick={this.addItemClickHandler}>+ Item</div>}
+          <div className={addClassNames} onClick={this.addItemClickHandler}>+ Item</div>
         </div>
       </div>;
   }

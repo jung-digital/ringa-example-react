@@ -58,7 +58,8 @@ export default class Item extends React.Component {
     this.props.item.saving = false;
 
     dispatch(AppController.SAVE_ITEM, {
-      item: this.props.item
+      item: this.props.item,
+      autoAddNewItem: true
     }, this.refs.rootNode);
   }
 

@@ -1,6 +1,7 @@
 @import '../../styles/variables';
 
 .item {
+  cursor: pointer;
   position: relative;
   display: flex;
   justify-content: space-between;

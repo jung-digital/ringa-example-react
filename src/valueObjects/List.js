@@ -92,7 +92,7 @@ class List extends Model {
  * @returns {List} The new List object, ready for injection into the view layer.
  */
 List.deserialize = function(obj) {
-  return new List(obj.id, obj);
+  return new List(undefined, obj);
 };
 
 export default List;

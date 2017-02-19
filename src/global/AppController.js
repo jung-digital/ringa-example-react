@@ -1,4 +1,4 @@
-import {Controller, forEachParallel, iif, stop} from 'ringa';
+import {Controller, forEachParallel, iif, event} from 'ringa';
 
 import PopupLoadingController from '../components/popup/loading/PopupLoadingController';
 import PopupLoadingModel from '../components/popup/loading/PopupLoadingModel';
@@ -46,7 +46,6 @@ export default class AppController extends Controller {
         newItem.parentList = list;
 
         appModel.startEditItem(newItem);
-
         list.pushItem(newItem);
       },
       APIController.PUT_LIST
@@ -121,6 +120,7 @@ export default class AppController extends Controller {
 
     // AppController.SAVE_LIST
     this.addListener('saveList', [
+      iif(autoAddItem => autoAddItem, AppController.ADD_ITEM_TO_LIST),
       APIController.PUT_LIST
     ]);
 
@@ -140,10 +140,13 @@ export default class AppController extends Controller {
 
     // AppController.SAVE_ITEM
     this.addListener('saveItem', [
-      (appModel, item) => {
-        appModel.endEditItem(item);
+      ($detail, appModel, item) => {
+        $detail.list = item.parentList;
       },
-      iif(item => item.title === '', AppController.REMOVE_ITEM, APIController.PUT_ITEM)
+      iif(item => item.title === '', AppController.REMOVE_ITEM, APIController.PUT_ITEM),
+      iif((item, autoAddNewItem) => item.title !== '' && autoAddNewItem,
+        event(AppController.ADD_ITEM_TO_LIST, {autoEdit: true}),
+        (appModel, item) => {appModel.endEditItem(item);})
     ]);
 
     // AppController.INITIALIZE

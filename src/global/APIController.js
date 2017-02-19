@@ -80,7 +80,6 @@ export default class APIController extends Ringa.Controller {
     // APIController.POST_LIST
     this.addListener('postList', [(list) => {
       list.token = this.token;
-      console.log('SAVING', list.serialize(), this.token);
     }, event(APIController.POST, {
       url: '/list',
       bodyParam: 'list' // Expect dispatched RingaEvent::detail to have a 'list' property
@@ -133,7 +132,7 @@ export default class APIController extends Ringa.Controller {
         url = `${url}/${props.id}`;
       }
 
-      console.log(`${props.type} ${url}`, props.body);
+      //console.log(`${props.type} ${url}`, props.body);
 
       xhr.open(props.type, url, true);
 
@@ -150,11 +149,11 @@ export default class APIController extends Ringa.Controller {
 
           }
 
-          console.log('API RESULT', props, parsedResponse);
+          //console.log('API RESULT', props, parsedResponse);
 
           resolve(parsedResponse);
         } else {
-          console.error('API Error', xhr);
+          //console.error('API Error', xhr);
 
           reject(JSON.parse(xhr.response));
         }
