@@ -18,9 +18,22 @@
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
-  "repository": "",
-  "keywords": [],
-  "author": "Joshua Jung <josh@jungdigital.com>",
+  "repository": "http://www.github.com/jung-digital/react-ringa",
+  "keywords": ["react",
+    "framework",
+    "mvc",
+    "async",
+    "chaining",
+    "promise",
+    "data",
+    "state",
+    "ioc",
+    "redux",
+    "flux"],
+  "authors": [
+    "Joshua Jung <joshua.p.jung@gmail.com> (https://github.com/joshjung)",
+    "Thomas Yarnall <corragon@gmail.com> (https://github.com/corragon)"
+  ],
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",

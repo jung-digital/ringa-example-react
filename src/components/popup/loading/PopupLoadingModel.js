@@ -1,5 +1,8 @@
 import PopupBaseModel from '../PopupBaseModel';
 
+/**
+ * We can extend a base Ringa Model and add functionality to it.
+ */
 class PopupLoadingModel extends PopupBaseModel {
   constructor() {
     super();

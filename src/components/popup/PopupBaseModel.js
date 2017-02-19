@@ -1,6 +1,9 @@
 import {Model} from 'ringa';
 
-export default class PopupModel extends Model {
+/**
+ * Models can be super simple! In this case we just have three properties with defaults.
+ */
+export default class PopupBaseModel extends Model {
   constructor() {
     super();
 

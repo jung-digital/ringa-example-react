@@ -8,6 +8,9 @@ class PopupLoading extends PopupBase {
   constructor() {
     super();
 
+    /**
+     * Inject into this.state.popupLoadingModel
+     */
     depend(this, dependency('popupLoadingModel', 'messages'));
   }
 

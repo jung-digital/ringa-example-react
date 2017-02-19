@@ -26,10 +26,17 @@ class App extends React.Component {
     console.log('%cStarting Ringa Example ReactJS Application!', 'color: blue; font-weight: bold;');
     console.log(`%cUsing token '${props.token}'. Tokens are not designed to be shared across active sessions due to data corruption, so you are forewarned.`, 'color: blue; font-weight: bold;');
 
+    /**
+     * Attach our three controllers!
+     */
     attach(this, new APIController(props.token));
     attach(this, new AppController());
     attach(this, new PopupLoadingController());
 
+    /**
+     * Watch appModel.windowScrollAllowed and update this.state.windowScrollAllowed by looking through all our controllers
+     * for the first object that extends AppModel.
+     */
     depend(this, dependency(AppModel, 'windowScrollAllowed'));
   }
 
@@ -38,12 +45,19 @@ class App extends React.Component {
   }
 
   render() {
+    /**
+     * But watching when the component has been mounted, we can fade in at the appropriate time.
+     */
     let classes = classnames({
       app: true,
       show: this.mounted,
       'overflow-hidden': !this.state.windowScrollAllowed
     });
 
+    /**
+     * By default, our depend() function needs a DOM node to do its searching. The default name for the ref it looks
+     * for is 'ringaComponent'
+     */
     return (
       <div ref="ringaComponent" className={classes}>
         <Header/>

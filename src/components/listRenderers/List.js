@@ -20,6 +20,15 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
 
+    /**
+     * The watch() function watches a Model that is already available to us. depend() does a lookup for a model and
+     * a property.
+     *
+     * Both of them by default update the React component when they detect a change.
+     *
+     * In this case, we might have the list provided to us on the props. But we don't have access to the AppModel, so
+     * we have to look for it.
+     */
     this.watch(props);
 
     depend(this, [
@@ -93,6 +102,9 @@ export default class List extends React.Component {
   }
 
   render() {
+    /**
+     * All of these properties are injected by watch() or depend() setup in the constructor.
+     */
     let { id, title, description, items, loading, editing } = this.state.list;
     let { editItem, editList } = this.state;
 

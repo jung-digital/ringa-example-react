@@ -17,6 +17,12 @@ export default class Workspace extends React.Component {
   constructor(props) {
     super(props);
 
+    /**
+     * Here we could just watch every property on the AppModel, but by selecting specific properties we
+     * can hopefully improve performance. If we watched the entire Model and someone added more properties
+     * later we would have a refresh scope creep where the Workspace would be updated more than it needs to
+     * be.
+     */
     depend(this, [
       dependency(AppModel, 'lists'),
       dependency(AppModel, 'initialized'),

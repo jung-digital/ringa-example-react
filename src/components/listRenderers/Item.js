@@ -13,6 +13,12 @@ export default class Item extends React.Component {
   constructor(props) {
     super(props);
 
+    /**
+     * The watch() function watches a Model that is already available to us. depend() does a lookup for a model and
+     * a property.
+     *
+     * Both of them by default update the React component when they detect a change.
+     */
     watch(this, props.item);
 
     this.clickHandler = this.clickHandler.bind(this);

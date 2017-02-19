@@ -18,7 +18,6 @@ export default class Intro extends React.Component {
         <li><a href="http://www.github.com/jung-digital/ringa-example-react" target="_blank">Ringa ReactJS Demo</a></li>
       </ul>
 
-
       <div>To keep the demo simple, each session is assigned a token and all activity in the session is associated with the token. Sessions are not designed to be shared between browsers or errors will occur.</div>
     </div>;
   }

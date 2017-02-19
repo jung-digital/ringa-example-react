@@ -2,6 +2,9 @@ import React from 'react';
 import './Loader.scss';
 import loaderGIF from '../../images/loader.gif';
 
+/**
+ * The Loader is a wrapper for another set of components.
+ */
 export default class Loader extends React.Component {
   render() {
     // Loading...

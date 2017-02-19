@@ -10,6 +10,10 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
 
+    /**
+     * Look for the activeCalls on the APIModel and injection into this.state.activeCalls so we know when to
+     * show the spinner.
+     */
     depend(this, dependency(APIModel, 'activeCalls'));
   }
 
