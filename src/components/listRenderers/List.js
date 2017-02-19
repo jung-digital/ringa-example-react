@@ -39,6 +39,10 @@ export default class List extends React.Component {
   // Methods
   //-----------------------------------
   save() {
+    if (!this.refs.inputTitle) {
+      return;
+    }
+
     this.props.list.title = this.refs.inputTitle.value;
     this.props.list.description = this.refs.inputDescription.value;
 

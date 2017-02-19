@@ -187,16 +187,20 @@ export default class AppController extends Controller {
       forEachParallel('lists', 'list', AppController.REFRESH_ITEMS_FOR_LIST)
     ]);
 
-    this.addListener('click', [
+    this.addListener('mousedown', [
       (appModel, $ringaEvent) => {
         if ($ringaEvent.event.target.nodeName === 'INPUT') {
           return;
         }
 
-        appModel.endEditItem();
-        appModel.endEditList();
+        if (appModel.editing) {
+          $ringaEvent.event.stopPropagation();
+
+          appModel.endEditItem();
+          appModel.endEditList();
+        }
       }
-    ]);
+    ], true);
   }
 
   busMounted() {

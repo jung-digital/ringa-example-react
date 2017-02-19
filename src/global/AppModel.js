@@ -23,6 +23,10 @@ export default class AppModel extends Model {
     return this.loadCount !== 0;
   }
 
+  get editing() {
+    return this.editItem || this.editList;
+  }
+
   //-----------------------------------
   // Methods
   //-----------------------------------
