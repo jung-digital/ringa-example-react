@@ -1,0 +1,17 @@
+.inspector {
+  position: relative;
+  overflow: hidden;
+  height: 0px;
+  transition: height 0.75s ease-in-out;
+  background: #ef7600;
+}
+
+.inspector.show {
+  height: 250px;
+}
+
+.inspector .panels {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 1rem;
+}

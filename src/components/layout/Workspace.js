@@ -18,17 +18,16 @@ export default class Workspace extends React.Component {
     super(props);
 
     /**
-     * Here we could just watch every property on the AppModel, but by selecting specific properties we
-     * can hopefully improve performance. If we watched the entire Model and someone added more properties
-     * later we would have a refresh scope creep where the Workspace would be updated more than it needs to
-     * be.
+     * This will watch for signals 'lists', 'initialized', 'editItem', 'editList' on the first AppModel instance
+     * it finds. It will then update the following items when each changes:
+     *
+     * this.state.lists
+     * this.state.initialized
+     * this.state.editItem
+     * this.state.editList
+     * this.state.appModel
      */
-    depend(this, [
-      dependency(AppModel, 'lists'),
-      dependency(AppModel, 'initialized'),
-      dependency(AppModel, 'editItem'),
-      dependency(AppModel, 'editList')
-    ]);
+    depend(this, dependency(AppModel, ['lists', 'initialized', 'editItem', 'editList']));
 
     this.addListClickHandler = this.addListClickHandler.bind(this);
   }
@@ -48,9 +47,15 @@ export default class Workspace extends React.Component {
       hide: editItem || editList
     });
 
+    let showInspectorClassNames = classnames({
+      'show-inspector': true,
+      hide: this.state.appModel.showInspector
+    });
+
     return <div className="workspace" ref="root">
       {lists.length === 0 ? <Intro /> : lists.map(list => <List key={list.id} list={list} />)}
-      <button className={addClassNames} onClick={this.addListClickHandler}>+ List</button>
+      <button className={addClassNames} onClick={this.addListClickHandler}>Add List...</button>
+      <button className={showInspectorClassNames} onClick={this.addListClickHandler}>Debug</button>
     </div>;
   }
 

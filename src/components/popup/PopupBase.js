@@ -10,17 +10,14 @@ import {depend, dependency} from 'react-ringa';
  * This class is designed to be extended.
  */
 class PopupBase extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     /**
      * Will automatically look for a PopupBaseModel and watch 'show' and 'opacity' and inject any
      * changes into this.state.show and this.state.opacity.
      */
-    depend(this, [
-      dependency(PopupBaseModel, 'show'),
-      dependency(PopupBaseModel, 'opacity')
-    ]);
+    depend(this, dependency(PopupBaseModel, ['show', 'opacity']));
   }
 
   render(children) {

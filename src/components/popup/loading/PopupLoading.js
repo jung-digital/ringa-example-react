@@ -5,8 +5,8 @@ import PopupBase from '../PopupBase';
 import {depend, dependency} from 'react-ringa';
 
 class PopupLoading extends PopupBase {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     /**
      * Inject into this.state.popupLoadingModel

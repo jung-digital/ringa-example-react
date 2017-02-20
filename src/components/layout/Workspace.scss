@@ -27,6 +27,25 @@
   transition: $transition-fade;
 }
 
+.workspace button.show-inspector{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: .5em;
+  color: $white;
+  width: 100px;
+  text-align: center;
+  padding: 0.5em 0em;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: $transition-fade;
+}
+
+.workspace button.add-list:hover {
+  background: $hover-1;
+}
+
 .workspace button.add-list.hide {
   opacity: 0.1;
   pointer-events: none;

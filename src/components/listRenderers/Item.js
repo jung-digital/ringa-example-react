@@ -51,7 +51,7 @@ export default class Item extends React.Component {
 
     if (editing) {
       return <div className="item" ref="rootNode">
-        <input ref="input" defaultValue={title} onBlur={this.blurHandler} onKeyUp={this.inputKeyUpHandler} />
+        <input ref="input" defaultValue={title} onBlur={this.blurHandler} onKeyUp={this.inputKeyUpHandler} placeholder="Item Description"/>
         <div className="item--delete" onClick={this.deleteClickHandler}><i className="fa fa-times-circle" aria-hidden="true"></i></div>
       </div>;
     }
@@ -62,14 +62,14 @@ export default class Item extends React.Component {
     </div>;
   }
 
-  save() {
+  save(autoAddNewItem = true) {
     this.props.item.title = this.refs.input.value;
     this.props.item.editing = false;
     this.props.item.saving = false;
 
     dispatch(AppController.SAVE_ITEM, {
       item: this.props.item,
-      autoAddNewItem: true
+      autoAddNewItem
     }, this.refs.rootNode);
   }
 
@@ -86,8 +86,8 @@ export default class Item extends React.Component {
     }
   }
 
-  blurHandler() {
-    this.save();
+  blurHandler(event) {
+    this.save(false);
   }
 
   deleteClickHandler(event) {

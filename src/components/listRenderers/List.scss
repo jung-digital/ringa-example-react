@@ -6,6 +6,12 @@
   flex-direction: column;
   align-items: stretch;
   margin: .5em;
+  transition: $transition-fade;
+}
+
+.list.hide {
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 .list--container {
@@ -80,6 +86,10 @@
 .list--add-item.hide {
   opacity: 0.1;
   pointer-events: none;
+}
+
+.list--add-item:hover {
+  background: $hover-1;
 }
 
 .list--items {

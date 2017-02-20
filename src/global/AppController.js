@@ -46,12 +46,11 @@ export default class AppController extends Controller {
      * 'id' default is the constructor name and an incrementing number
      * 'name' default is the camelcase of the constructor name, like so:
      *
-     * PopupLoadingModel.id === 'PopupLoadingModel###'
-     * PopupLoadingModel.name === 'popupLoadingModel'
+     * AppModel.id === 'AppModel###'
+     * AppModel.name === 'appModel'
      *
      * You can request these objects by name or id as a function argument various functions in executors.
      */
-    this.addModel(new PopupLoadingModel());
     this.addModel(new AppModel());
 
     //---------------------------------

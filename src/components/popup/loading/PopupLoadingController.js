@@ -41,9 +41,7 @@ PopupLoadingController.show = (message) => {
  * Create a static function that allows us to return a custom formatted executor for use in a Controller thread.
  */
 PopupLoadingController.hide = (message) => {
-  if (!message) {
-    message = 'REMOVEALL';
-  }
+  message = message || 'REMOVEALL';
 
   return event('hidePopup', { message });
 };

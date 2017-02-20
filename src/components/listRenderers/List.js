@@ -31,10 +31,7 @@ export default class List extends React.Component {
      */
     this.watch(props);
 
-    depend(this, [
-      dependency(AppModel, 'editItem'),
-      dependency(AppModel, 'editList')
-    ]);
+    depend(this, dependency(AppModel, ['editItem', 'editList']));
 
     this.addItemClickHandler = this.addItemClickHandler.bind(this);
     this.deleteListClickHandler = this.deleteListClickHandler.bind(this);
@@ -47,7 +44,7 @@ export default class List extends React.Component {
   //-----------------------------------
   // Methods
   //-----------------------------------
-  save() {
+  save(autoAddItem = false) {
     if (!this.refs.inputTitle) {
       return;
     }
@@ -59,16 +56,17 @@ export default class List extends React.Component {
 
     dispatch(AppController.SAVE_LIST, {
       list: this.props.list,
-      autoAddItem: this.props.list.items.length === 0,
+      autoAddItem,
       autoEdit: true
     }, this.refs.root);
   }
 
-  checkBlur() {
+  checkBlur(isDescription) {
     // When pressing 'tab', the transition to the description does not happen immediately.
     setTimeout(() => {
       if (document.activeElement !== this.refs.inputTitle && document.activeElement !== this.refs.inputDescription) {
-        this.save();
+        // We autoAddItem if we are using tab or enter from the description box
+        this.save(isDescription && this.state.list.items.length === 0);
       }
     }, 20);
   }
@@ -111,10 +109,10 @@ export default class List extends React.Component {
     let header = editing ?
       <div className="list--header" onClick={this.headerClickHandler}>
         <div className="list--title">
-          <input ref="inputTitle" defaultValue={title} onBlur={this.inputTitleBlurHandler} onKeyUp={this.inputKeyUpHandler} tabIndex="1" />
+          <input ref="inputTitle" defaultValue={title} onBlur={this.inputTitleBlurHandler} onKeyUp={this.inputKeyUpHandler} tabIndex="1" placeholder="Title" />
         </div>
         <div className="list--description">
-          <input ref="inputDescription" defaultValue={description} onBlur={this.inputDescriptionBlurHandler} onKeyUp={this.inputKeyUpHandler} tabIndex="2" />
+          <input ref="inputDescription" defaultValue={description} onBlur={this.inputDescriptionBlurHandler} onKeyUp={this.inputKeyUpHandler} tabIndex="2" placeholder="Description" />
         </div>
       </div>
       :
@@ -127,22 +125,30 @@ export default class List extends React.Component {
         <div className="list--description">{description}</div>
       </div>;
 
-    let addClassNames = classnames({
-      'list--add-item': true,
-      'hide': editItem || editList
+    let somethingIsBeingEdited = editItem || editList;
+    let editingListOrItem = somethingIsBeingEdited && (editList === this.state.list || (editItem && editItem.parentList === this.state.list));
+
+    let listClassNames = classnames({
+      list: true,
+      hide: !editingListOrItem && somethingIsBeingEdited
     });
 
-    return <div className="list" key={id} ref="root">
+    let addItemClassNames = classnames({
+      'list--add-item': true,
+      hide: editingListOrItem && editList
+    });
+
+    return <div className={listClassNames} key={id} ref="root">
         <div className="list--container">
           {header}
           <div className="list--content">
-            <Loader loading={loading}>
+            <Loader loading={loading} height={items.length * 35}>
               <div className="list--items">
                 {items.map(item => <Item key={item || item.id} item={item} />)}
               </div>
             </Loader>
           </div>
-          <div className={addClassNames} onClick={this.addItemClickHandler}>+ Item</div>
+          <div className={addItemClassNames} onClick={this.addItemClickHandler}>Add Item...</div>
         </div>
       </div>;
   }
@@ -174,7 +180,7 @@ export default class List extends React.Component {
   }
 
   inputDescriptionBlurHandler() {
-    this.checkBlur();
+    this.checkBlur(true);
   }
 
   inputKeyUpHandler(event) {

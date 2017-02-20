@@ -10,6 +10,7 @@ import PopupLoading from './popup/loading/PopupLoading';
 import AppModel from '../global/AppModel';
 import Header from './layout/Header';
 import Workspace from './layout/Workspace';
+import Inspector from './inspector/Inspector';
 
 import classnames from 'classnames';
 
@@ -61,6 +62,7 @@ class App extends React.Component {
     return (
       <div ref="ringaComponent" className={classes}>
         <Header/>
+        <Inspector />
         <Workspace/>
         <PopupLoading />
       </div>
