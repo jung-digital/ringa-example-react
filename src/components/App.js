@@ -3,6 +3,7 @@ require('./App.scss');
 
 import React from 'react';
 
+import {InspectorController} from 'ringa';
 import AppController from '../global/AppController';
 import APIController from '../global/APIController';
 import PopupLoadingController from './popup/loading/PopupLoadingController';
@@ -28,8 +29,9 @@ class App extends React.Component {
     console.log(`%cUsing token '${props.token}'. Tokens are not designed to be shared across active sessions due to data corruption, so you are forewarned.`, 'color: blue; font-weight: bold;');
 
     /**
-     * Attach our three controllers!
+     * Attach our four main controllers! These are all attached to the document so they receive events from everywhere.
      */
+    attach(this, new InspectorController());
     attach(this, new APIController(props.token));
     attach(this, new AppController());
     attach(this, new PopupLoadingController());

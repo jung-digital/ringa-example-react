@@ -1,13 +1,13 @@
 @import '../../styles/variables';
 
 .workspace img {
-  position: relative;
   margin: 40px auto;
   background: #fff;
   display: block;
 }
 
 .workspace {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   padding: 1rem;
@@ -31,14 +31,13 @@
   position: absolute;
   top: 0px;
   right: 0px;
-  margin: .5em;
-  color: $white;
+  color: $black;
   width: 100px;
   text-align: center;
   padding: 0.5em 0em;
   cursor: pointer;
   border: none;
-  background: none;
+  background: $color-action;
   transition: $transition-fade;
 }
 

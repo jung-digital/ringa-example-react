@@ -15,8 +15,6 @@ export default class PopupBaseController extends Controller {
     this.addListener('showPopup', popupModel => {
       popupModel.opacity = 1;
       popupModel.show = true;
-
-      console.log('Showing popup!');
     });
 
     //---------------------------------

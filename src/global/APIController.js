@@ -11,9 +11,9 @@ export default class APIController extends Ringa.Controller {
   // Constructor
   //-----------------------------------
   constructor(token) {
-    super('APIController', undefined, {
+    super('APIController', undefined, Object.assign({
       timeout: 10000
-    });
+    }, window.__apiControllerOptions));
 
     this.apiModel = new APIModel();
 

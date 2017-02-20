@@ -86,7 +86,7 @@ export default class Item extends React.Component {
     }
   }
 
-  blurHandler(event) {
+  blurHandler() {
     this.save(false);
   }
 

@@ -1,7 +1,6 @@
 import {Controller, forEachParallel, iif, event} from 'ringa';
 
 import PopupLoadingController from '../components/popup/loading/PopupLoadingController';
-import PopupLoadingModel from '../components/popup/loading/PopupLoadingModel';
 
 import { SerializeLists } from './APISerializers';
 
@@ -32,13 +31,9 @@ export default class AppController extends Controller {
      * can simulate a slow device or slow connections. Note that throttle only applies to this controller
      * so you can custom throttle each section of your application without bogging the entire thing down.
      */
-    super('AppController', undefined, {
+    super('AppController', undefined, Object.assign({
       timeout: 5000
-      // throttle: {
-      //   min: 10,
-      //   max: 50
-      // }
-    });
+    }, window.__generalControllerOptions));
 
     /**
      * Here we add two models to our Controller. By default if no name or id is provided, they will have them assigned.

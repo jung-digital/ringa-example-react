@@ -30,6 +30,7 @@ export default class Workspace extends React.Component {
     depend(this, dependency(AppModel, ['lists', 'initialized', 'editItem', 'editList']));
 
     this.addListClickHandler = this.addListClickHandler.bind(this);
+    this.viewRingaInspectorClickHandler = this.viewRingaInspectorClickHandler.bind(this);
   }
 
   //-----------------------------------
@@ -42,6 +43,8 @@ export default class Workspace extends React.Component {
       return <div className="workspace" ref="root"></div>;
     }
 
+    let { showInspector } = this.state.appModel;
+
     let addClassNames = classnames({
       'add-list': true,
       hide: editItem || editList
@@ -49,13 +52,13 @@ export default class Workspace extends React.Component {
 
     let showInspectorClassNames = classnames({
       'show-inspector': true,
-      hide: this.state.appModel.showInspector
+      hide: showInspector
     });
 
     return <div className="workspace" ref="root">
       {lists.length === 0 ? <Intro /> : lists.map(list => <List key={list.id} list={list} />)}
       <button className={addClassNames} onClick={this.addListClickHandler}>Add List...</button>
-      <button className={showInspectorClassNames} onClick={this.addListClickHandler}>Debug</button>
+      <button className={showInspectorClassNames} onClick={this.viewRingaInspectorClickHandler}>{showInspector ? 'Hide' : 'View'} Inspector</button>
     </div>;
   }
 
@@ -66,5 +69,9 @@ export default class Workspace extends React.Component {
     dispatch(AppController.ADD_LIST, {
       autoEdit: true
     }, this.refs.root);
+  }
+
+  viewRingaInspectorClickHandler() {
+    this.state.appModel.showInspector = !this.state.appModel.showInspector;
   }
 }
