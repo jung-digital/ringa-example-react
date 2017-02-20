@@ -27,7 +27,7 @@ export default class Workspace extends React.Component {
      * this.state.editList
      * this.state.appModel
      */
-    depend(this, dependency(AppModel, ['lists', 'initialized', 'editItem', 'editList']));
+    depend(this, dependency(AppModel, ['lists', 'initialized', 'editItem', 'editList', 'showInspector']));
 
     this.addListClickHandler = this.addListClickHandler.bind(this);
     this.viewRingaInspectorClickHandler = this.viewRingaInspectorClickHandler.bind(this);
