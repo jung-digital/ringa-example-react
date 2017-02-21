@@ -144,7 +144,7 @@ export default class List extends React.Component {
           <div className="list--content">
             <Loader loading={loading} height={items.length * 35}>
               <div className="list--items">
-                {items.map(item => <Item key={item || item.id} item={item} />)}
+                {items.map(item => <Item key={item.id} item={item} />)}
               </div>
             </Loader>
           </div>

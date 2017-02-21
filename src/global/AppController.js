@@ -230,11 +230,10 @@ export default class AppController extends Controller {
         // Provide for PUT_LIST
         $ringaEvent.detail.list = item.parentList;
         let ix = item.parentList.items.indexOf(item);
-        item.parentList.items.splice(ix, 1);
+        item.parentList.removeItemByIx(ix);
       },
       APIController.DELETE_ITEM,
-      APIController.PUT_LIST,
-      AppController.REFRESH_LIST
+      APIController.PUT_LIST
     ]);
 
     //---------------------------------
@@ -277,6 +276,17 @@ export default class AppController extends Controller {
       (appModel, $ringaEvent) => {
         if ($ringaEvent.event.target.nodeName === 'INPUT') {
           return;
+        }
+
+        let t = $ringaEvent.event.target;
+
+        // Watch out for the Inspector pane!
+        while (t) {
+          if (t.className.indexOf('inspector')) {
+            return;
+          }
+
+          t = t.parentNode;
         }
 
         if (appModel.editing) {

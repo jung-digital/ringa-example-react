@@ -68,6 +68,16 @@ class List extends Model {
   }
 
   /**
+   * Removes an item by its index and then notifies 'items'.
+   *
+   * @param ix
+   */
+  removeItemByIx(ix) {
+    this.items.splice(ix, 1);
+    this.notify('items');
+  }
+
+  /**
    * Convert this List into a simple Javascript Object to be sent to the server.
    *
    * Note that our server for this demo only stores the id of the items so we only save that area.
@@ -82,6 +92,10 @@ class List extends Model {
       order: this.order,
       token: this.token
     };
+  }
+
+  toString() {
+    return 'List: ' + this.title;
   }
 }
 

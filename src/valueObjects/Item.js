@@ -28,6 +28,10 @@ class Item extends Model {
       title: this.title
     };
   }
+
+  toString() {
+    return 'Item: ' + this.title;
+  }
 }
 
 Item.deserialize = function(obj) {

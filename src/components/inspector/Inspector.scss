@@ -83,19 +83,33 @@
     .detail {
       height: 21px;
     }
+
     input {
       width: 30px;
       float:right;
     }
 
-    .commit {
-      float: right;
+    .btn {
       margin: 5px;
       display: inline-block;
       cursor: pointer;
       background-color: $color-action;
       color: $color-action-text;
-      padding: 10px;
+      padding: 4px;
+      border: 1px solid #ef7600;
+    }
+
+    .btn:hover {
+      background-color: $hover-1;
+      color: $hover-text-1;
+    }
+
+    .btn-reset {
+      float: left;
+    }
+
+    .btn-commit {
+      float: right;
     }
   }
 }
