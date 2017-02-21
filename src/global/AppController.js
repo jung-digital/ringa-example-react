@@ -93,9 +93,15 @@ export default class AppController extends Controller {
       /**
        * The simplest executor is a function and here we are requesting that the $ringaEvent be injected.
        */
-      ($ringaEvent) => {
+      ($ringaEvent, list, appModel) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
-        $ringaEvent.detail.item = new Item();
+        let newItem = $ringaEvent.detail.item = new Item();
+        newItem.parentList = list;
+
+        // These two lines set properties on Ringa Model objects, which automatically updates the view components
+        // that are watching them.
+        appModel.startEditItem(newItem);
+        list.pushItem(newItem);
       },
       /**
        * Dispatch an event to our APIController. The $ringaEvent.detail object above is automatically merged into
@@ -106,14 +112,8 @@ export default class AppController extends Controller {
        * Once our result comes back from the call, it is stored in $lastPromiseResult. Note that we are requesting
        * multiple injections.
        */
-      ($lastPromiseResult, list, autoEdit, appModel) => {
-        let newItem = Item.deserialize($lastPromiseResult);
-        newItem.parentList = list;
-
-        // These two lines set properties on Ringa Model objects, which automatically updates the view components
-        // that are watching them.
-        appModel.startEditItem(newItem);
-        list.pushItem(newItem);
+      ($lastPromiseResult, item, list, autoEdit, appModel) => {
+        item.id = $lastPromiseResult.id;
       },
       /**
        * Now we can go ahead and save the update to the list!
