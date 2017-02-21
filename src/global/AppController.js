@@ -93,9 +93,9 @@ export default class AppController extends Controller {
       /**
        * The simplest executor is a function and here we are requesting that the $ringaEvent be injected.
        */
-      ($ringaEvent, list, appModel) => {
+      ($detail, list, appModel) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
-        let newItem = $ringaEvent.detail.item = new Item();
+        let newItem = $detail.item = new Item();
         newItem.parentList = list;
 
         // These two lines set properties on Ringa Model objects, which automatically updates the view components
@@ -211,8 +211,7 @@ export default class AppController extends Controller {
     // AppController.SAVE_LIST
     //---------------------------------
     this.addListener('saveList', [
-      iif(autoAddItem => autoAddItem, AppController.ADD_ITEM_TO_LIST),
-      APIController.PUT_LIST,
+      iif(autoAddItem => autoAddItem, AppController.ADD_ITEM_TO_LIST, APIController.PUT_LIST),
       (appModel, list) => {
         appModel.endEditList(list);
       }
@@ -231,8 +230,8 @@ export default class AppController extends Controller {
         let ix = item.parentList.items.indexOf(item);
         item.parentList.removeItemByIx(ix);
       },
-      APIController.DELETE_ITEM,
-      APIController.PUT_LIST
+      iif(itemId => itemId.indexOf('Item') === -1, APIController.DELETE_ITEM),
+      iif(itemId => itemId.indexOf('Item') === -1, APIController.PUT_LIST)
     ]);
 
     //---------------------------------

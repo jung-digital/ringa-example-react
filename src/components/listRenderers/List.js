@@ -37,13 +37,9 @@ export default class List extends React.Component {
     this.deleteListClickHandler = this.deleteListClickHandler.bind(this);
     this.headerClickHandler = this.headerClickHandler.bind(this);
     this.inputKeyUpHandler = this.inputKeyUpHandler.bind(this);
+    this.save = this.save.bind(this);
     this.mouseBlock = this.mouseBlock.bind(this);
-
-    window.addEventListener('mousedown', () => {
-      if (this.state.list.editing) {
-        this.save(this.state.list.items.length === 0);
-      }
-    });
+    this.mouseUpHandler = this.mouseUpHandler.bind(this);
   }
 
   //-----------------------------------
@@ -56,8 +52,6 @@ export default class List extends React.Component {
 
     this.props.list.title = this.refs.inputTitle.value;
     this.props.list.description = this.refs.inputDescription.value;
-
-    this.appModel.endEditList(this.props.list);
 
     dispatch(AppController.SAVE_LIST, {
       list: this.props.list,
@@ -91,7 +85,13 @@ export default class List extends React.Component {
   componentDidMount() {
     this.appModel = find(this, AppModel);
 
+    window.addEventListener('mouseup', this.mouseUpHandler);
+
     this.tryFocusEditing();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('mouseup', this.mouseUpHandler);
   }
 
   render() {
@@ -102,7 +102,7 @@ export default class List extends React.Component {
     let { editItem, editList } = this.state;
 
     let header = editing ?
-      <div className="list--header" onClick={this.headerClickHandler} onMouseDown={this.mouseBlock}>
+      <div className="list--header" onClick={this.headerClickHandler} onMouseUp={this.mouseBlock}>
         <div className="list--title">
           <input ref="inputTitle" defaultValue={title} onKeyUp={this.inputKeyUpHandler} tabIndex="1" placeholder="Title" />
         </div>
@@ -178,5 +178,11 @@ export default class List extends React.Component {
 
   mouseBlock(event) {
     event.stopPropagation();
+  }
+
+  mouseUpHandler() {
+    if (this.state.list && this.state.list.editing) {
+      this.save(this.state.list.items.length === 0);
+    }
   }
 }

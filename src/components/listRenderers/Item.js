@@ -23,8 +23,9 @@ export default class Item extends React.Component {
 
     this.clickHandler = this.clickHandler.bind(this);
     this.deleteClickHandler = this.deleteClickHandler.bind(this);
-    this.blurHandler = this.blurHandler.bind(this);
     this.inputKeyUpHandler = this.inputKeyUpHandler.bind(this);
+    this.mouseBlock = this.mouseBlock.bind(this);
+    this.mouseUpHandler = this.mouseUpHandler.bind(this);
   }
 
   //-----------------------------------
@@ -43,15 +44,21 @@ export default class Item extends React.Component {
   componentDidMount() {
     this.appModel = find(this, AppModel);
 
+    window.addEventListener('mouseup', this.mouseUpHandler);
+
     this.tryFocusInput();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('mouseup', this.mouseUpHandler);
   }
 
   render() {
     const {title, editing} = this.props.item;
 
     if (editing) {
-      return <div className="item" ref="rootNode">
-        <input ref="input" defaultValue={title} onBlur={this.blurHandler} onKeyUp={this.inputKeyUpHandler} placeholder="Item Description"/>
+      return <div className="item" ref="rootNode" onMouseUp={this.mouseBlock}>
+        <input ref="input" defaultValue={title} onKeyUp={this.inputKeyUpHandler} placeholder="Item Description"/>
         <div className="item--delete" onClick={this.deleteClickHandler}><i className="fa fa-times-circle" aria-hidden="true"></i></div>
       </div>;
     }
@@ -86,10 +93,6 @@ export default class Item extends React.Component {
     }
   }
 
-  blurHandler() {
-    this.save(false);
-  }
-
   deleteClickHandler(event) {
     event.stopPropagation();
 
@@ -100,5 +103,15 @@ export default class Item extends React.Component {
     dispatch(AppController.REMOVE_ITEM, {
       item: this.props.item
     }, this.refs.rootNode);
+  }
+
+  mouseBlock(event) {
+    event.stopPropagation();
+  }
+
+  mouseUpHandler() {
+    if (this.state.item && this.state.item.editing) {
+      this.save();
+    }
   }
 }
