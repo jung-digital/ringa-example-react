@@ -128,20 +128,19 @@ export default class AppController extends Controller {
      * Add new list to the application. Similar to addItemToList above.
      */
     this.addListener('addList', [
-      ($ringaEvent) => {
+      ($ringaEvent, autoEdit, appModel) => {
         // Create an empty item to save, which is required by APIController.POST_ITEM
-        $ringaEvent.detail.list = new List();
-      },
-      APIController.POST_LIST,
-      ($lastPromiseResult, list, autoEdit, appModel) => {
-        let newList = List.deserialize($lastPromiseResult);
-
+        let newList = $ringaEvent.detail.list = new List();
         // Update the display!
         if (autoEdit) {
           appModel.startEditList(newList);
         }
         newList.loading = false;
         appModel.pushList(newList);
+      },
+      APIController.POST_LIST,
+      ($lastPromiseResult, list) => {
+        list.id = $lastPromiseResult.id;
       }
     ]);
 
@@ -149,13 +148,13 @@ export default class AppController extends Controller {
     // AppController.DELETE_LIST
     //---------------------------------
     this.addListener('deleteList', [
-      APIController.DEL_LIST,
       /**
        * Here we do not do the splice ourselves. The reason is so that we can call notify() and update any watchers.
        */
       (appModel, listId) => {
         appModel.removeListById(listId);
-      }
+      },
+      APIController.DEL_LIST
     ]);
 
     //---------------------------------
@@ -265,38 +264,6 @@ export default class AppController extends Controller {
       PopupLoadingController.hide(),                   // Hide the loader, which does a fade out
       forEachParallel('lists', 'list', AppController.REFRESH_ITEMS_FOR_LIST) // Load all the lists items
     ]);
-
-    /**
-     * Since the AppController is attached to the document, it can listen to events like click.
-     *
-     * Here we say we want to listen to all click events during the capture phase so that if the user
-     * is not selecting an input element and editing is in progress, it cancels the edit.
-     */
-    this.addListener('click', [
-      (appModel, $ringaEvent) => {
-        if ($ringaEvent.event.target.nodeName === 'INPUT') {
-          return;
-        }
-
-        let t = $ringaEvent.event.target;
-
-        // Watch out for the Inspector pane!
-        while (t) {
-          if (t.className.indexOf('inspector')) {
-            return;
-          }
-
-          t = t.parentNode;
-        }
-
-        if (appModel.editing) {
-          $ringaEvent.event.stopPropagation();
-
-          appModel.endEditItem();
-          appModel.endEditList();
-        }
-      }
-    ], true /* useCapture */);
   }
 
   /**

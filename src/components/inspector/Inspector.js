@@ -40,7 +40,7 @@ export default class Inspector extends React.Component {
   }
 
   ringaObjectSort(a, b) {
-    return a.name > b.name ? 1 : -1;
+    return a.toString().toLowerCase() > b.toString().toLowerCase() ? 1 : -1;
   }
 
   render() {

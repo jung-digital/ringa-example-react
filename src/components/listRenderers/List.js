@@ -36,9 +36,14 @@ export default class List extends React.Component {
     this.addItemClickHandler = this.addItemClickHandler.bind(this);
     this.deleteListClickHandler = this.deleteListClickHandler.bind(this);
     this.headerClickHandler = this.headerClickHandler.bind(this);
-    this.inputTitleBlurHandler = this.inputTitleBlurHandler.bind(this);
-    this.inputDescriptionBlurHandler = this.inputDescriptionBlurHandler.bind(this);
     this.inputKeyUpHandler = this.inputKeyUpHandler.bind(this);
+    this.mouseBlock = this.mouseBlock.bind(this);
+
+    window.addEventListener('mousedown', () => {
+      if (this.state.list.editing) {
+        this.save(this.state.list.items.length === 0);
+      }
+    });
   }
 
   //-----------------------------------
@@ -59,16 +64,6 @@ export default class List extends React.Component {
       autoAddItem,
       autoEdit: true
     }, this.refs.root);
-  }
-
-  checkBlur(isDescription) {
-    // When pressing 'tab', the transition to the description does not happen immediately.
-    setTimeout(() => {
-      if (document.activeElement !== this.refs.inputTitle && document.activeElement !== this.refs.inputDescription) {
-        // We autoAddItem if we are using tab or enter from the description box
-        this.save(isDescription && this.state.list.items.length === 0);
-      }
-    }, 20);
   }
 
   tryFocusEditing() {
@@ -107,12 +102,12 @@ export default class List extends React.Component {
     let { editItem, editList } = this.state;
 
     let header = editing ?
-      <div className="list--header" onClick={this.headerClickHandler}>
+      <div className="list--header" onClick={this.headerClickHandler} onMouseDown={this.mouseBlock}>
         <div className="list--title">
-          <input ref="inputTitle" defaultValue={title} onBlur={this.inputTitleBlurHandler} onKeyUp={this.inputKeyUpHandler} tabIndex="1" placeholder="Title" />
+          <input ref="inputTitle" defaultValue={title} onKeyUp={this.inputKeyUpHandler} tabIndex="1" placeholder="Title" />
         </div>
         <div className="list--description">
-          <input ref="inputDescription" defaultValue={description} onBlur={this.inputDescriptionBlurHandler} onKeyUp={this.inputKeyUpHandler} tabIndex="2" placeholder="Description" />
+          <input ref="inputDescription" defaultValue={description} onKeyUp={this.inputKeyUpHandler} tabIndex="2" placeholder="Description" />
         </div>
       </div>
       :
@@ -175,17 +170,13 @@ export default class List extends React.Component {
     this.appModel.startEditList(this.props.list);
   }
 
-  inputTitleBlurHandler() {
-    this.checkBlur();
-  }
-
-  inputDescriptionBlurHandler() {
-    this.checkBlur(true);
-  }
-
   inputKeyUpHandler(event) {
     if (event.key === 'Enter') {
       this.save();
     }
+  }
+
+  mouseBlock(event) {
+    event.stopPropagation();
   }
 }
