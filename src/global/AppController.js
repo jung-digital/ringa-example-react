@@ -112,7 +112,7 @@ export default class AppController extends Controller {
        * Once our result comes back from the call, it is stored in $lastPromiseResult. Note that we are requesting
        * multiple injections.
        */
-      ($lastPromiseResult, item, list, autoEdit, appModel) => {
+      ($lastPromiseResult, item) => {
         item.id = $lastPromiseResult.id;
       },
       /**
