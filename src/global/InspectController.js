@@ -79,6 +79,7 @@ export default class InspectController extends Controller {
         arr.push('Injections: ' + Object.keys(injectionsByKey).sort().join(', '));
         arr.push('[BREAK]');
         arr.push('Models: ' + Object.keys(modelsByName).sort().join(', '));
+        arr.push('Click now to console log');
 
         inspectModel.inspectee = {
           stack: arr,
