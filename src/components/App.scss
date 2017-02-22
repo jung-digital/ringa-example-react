@@ -36,6 +36,21 @@ a, a:focus, a:visited {
   background-color: rgba(239,118,0,0.9) !important;
 }
 
+.temp-message {
+  position: fixed;
+
+  padding: 5px;
+  line-height: 22px;
+  font-size: 15px;
+
+  background-color: rgba(239,118,0, 0.9) !important;
+  width: 100%;
+  text-align: center;
+
+  bottom: 0px;
+  left: 0px;
+}
+
 .inspectee {
   position: fixed;
 

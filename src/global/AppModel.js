@@ -10,6 +10,7 @@ export default class AppModel extends Model {
     this.addProperty('loadCount', 0);
     this.addProperty('lists', []);
     this.addProperty('windowScrollAllowed', true);
+    this.addProperty('tempMessage', true);
 
     this.addProperty('initialized', false);
     this.addProperty('editItem', null);

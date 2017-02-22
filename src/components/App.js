@@ -43,8 +43,10 @@ class App extends React.Component {
      * Watch appModel.windowScrollAllowed and update this.state.windowScrollAllowed by looking through all our controllers
      * for the first object that extends AppModel.
      */
-    depend(this, dependency(AppModel, 'windowScrollAllowed'));
+    depend(this, dependency(AppModel, ['windowScrollAllowed', 'tempMessage']));
     depend(this, dependency(InspectModel, ['inspectee', 'top']));
+
+    this.hideTempMessage = this.hideTempMessage.bind(this);
   }
 
   componentDidMount() {
@@ -56,7 +58,7 @@ class App extends React.Component {
   }
 
   render() {
-    let {inspectee, top} = this.state;
+    let {inspectee, top, tempMessage} = this.state;
 
     /**
      * But watching when the component has been mounted, we can fade in at the appropriate time.
@@ -84,8 +86,13 @@ class App extends React.Component {
         <Workspace/>
         <PopupLoading />
         {inspectee ? <div className={inspecteeClasses}>{inspectee.stack.map(this.renderInspecteeElem)}</div> : null}
+        {tempMessage ? <div className="temp-message" onMouseMove={this.hideTempMessage}>Hold down ALT+SHIFT and move the mouse around for inspect mode! (Mouse over to close me)</div> : null}
       </div>
     );
+  }
+
+  hideTempMessage() {
+    this.state.appModel.tempMessage = false;
   }
 }
 

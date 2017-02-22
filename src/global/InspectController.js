@@ -105,8 +105,6 @@ export default class InspectController extends Controller {
       }
 
       inspectModel.inspectee = null;
-
-      event.stopPropagation();
     };
 
     let stopPropagation = (event) => {
