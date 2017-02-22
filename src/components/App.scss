@@ -1,3 +1,5 @@
+@import '../styles/variables';
+
 /* Base Application Styles */
 body {
   color: #f1fee6;
@@ -28,4 +30,38 @@ a, a:focus, a:visited {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.inspecting {
+  background-color: rgba(239,118,0,0.9) !important;
+}
+
+.inspectee {
+  position: fixed;
+
+  padding: 5px;
+  line-height: 17px;
+  font-size: 11px;
+
+  background-color: rgba(100,100,100,0.9) !important;
+  width: 100%;
+
+  .break {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    left: -15px;
+    margin: 5px 0px;
+    background-color: $black;
+  }
+}
+
+.inspectee-top {
+  top: 0px;
+  left: 0px;
+}
+
+.inspectee-bottom {
+  bottom: 0px;
+  left: 0px;
 }

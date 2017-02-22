@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 import './Header.scss';
 import loaderGIF from '../../images/loader.gif';
+import logo from '../../images/ringa.png';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -21,11 +22,15 @@ export default class Header extends React.Component {
     let {activeCalls} = this.state;
 
     let loaderClassnames = classnames({
+      loader: true,
       show: activeCalls > 0
     });
 
     return <div className="header">
-      <h1 className="header--title">Ringa Demo <img className={loaderClassnames} width="25" height="25" src={loaderGIF}/></h1>
+      <h1 className="header--title">
+        <img className="logo" src={logo}/>
+        <img className={loaderClassnames} width="25" height="25" src={loaderGIF}/>
+      </h1>
       <h3 className="header--sub-title">Alpha ReactJS Version</h3>
       <div className="header--links">
         <div className="header--link-group">

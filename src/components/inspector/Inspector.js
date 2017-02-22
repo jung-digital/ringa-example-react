@@ -28,11 +28,11 @@ export default class Inspector extends React.Component {
   // Methods
   //-----------------------------------
   renderThread(thread) {
-    return <div key={thread.id} className="object" onClick={() => {console.log(thread)}}>{thread.name}</div>;
+    return <div key={thread.id} className="object" onClick={() => {console.log(thread)}}>{thread.toString()}</div>;
   }
 
   renderExecutor(executor) {
-    return <div key={executor.id} className="object" onClick={() => {console.log(executor)}}>{executor.name}</div>;
+    return <div key={executor.id} className="object" onClick={() => {console.log(executor)}}>{executor.toString()}</div>;
   }
 
   renderRingaObject(ringaObject) {

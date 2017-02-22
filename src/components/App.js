@@ -5,6 +5,7 @@ import React from 'react';
 
 import {InspectorController} from 'ringa';
 import AppController from '../global/AppController';
+import InspectController from '../global/InspectController';
 import APIController from '../global/APIController';
 import PopupLoadingController from './popup/loading/PopupLoadingController';
 import PopupLoading from './popup/loading/PopupLoading';
@@ -12,6 +13,7 @@ import AppModel from '../global/AppModel';
 import Header from './layout/Header';
 import Workspace from './layout/Workspace';
 import Inspector from './inspector/Inspector';
+import InspectModel from '../global/InspectModel';
 
 import classnames from 'classnames';
 
@@ -32,6 +34,7 @@ class App extends React.Component {
      * Attach our four main controllers! These are all attached to the document so they receive events from everywhere.
      */
     attach(this, new InspectorController());
+    attach(this, new InspectController());
     attach(this, new APIController(props.token));
     attach(this, new AppController());
     attach(this, new PopupLoadingController());
@@ -41,13 +44,20 @@ class App extends React.Component {
      * for the first object that extends AppModel.
      */
     depend(this, dependency(AppModel, 'windowScrollAllowed'));
+    depend(this, dependency(InspectModel, ['inspectee', 'top']));
   }
 
   componentDidMount() {
     this.mounted = true;
   }
 
+  renderInspecteeElem(elem) {
+    return elem !== '[BREAK]' ? <div>{elem}</div> : <div className="break" />;
+  }
+
   render() {
+    let {inspectee, top} = this.state;
+
     /**
      * But watching when the component has been mounted, we can fade in at the appropriate time.
      */
@@ -57,16 +67,23 @@ class App extends React.Component {
       'overflow-hidden': !this.state.windowScrollAllowed
     });
 
+    let inspecteeClasses = inspectee ? classnames({
+        inspectee: true,
+        'inspectee-top': top,
+        'inspectee-bottom': !top
+      }) : '';
+
     /**
      * By default, our depend() function needs a DOM node to do its searching. The default name for the ref it looks
-     * for is 'ringaComponent'
+     * for is 'ringaRoot'
      */
     return (
-      <div ref="ringaComponent" className={classes}>
+      <div ref="ringaRoot" className={classes}>
         <Header/>
         <Inspector />
         <Workspace/>
         <PopupLoading />
+        {inspectee ? <div className={inspecteeClasses}>{inspectee.stack.map(this.renderInspecteeElem)}</div> : null}
       </div>
     );
   }

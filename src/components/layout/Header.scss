@@ -14,11 +14,21 @@
 }
 
 .header img {
+  padding: 0px;
+}
+
+.header img.logo {
+  display:inline;
+  width: 205px;
+}
+
+.header img.loader {
+  display:inline;
   opacity: 0;
   transition: opacity 0.5s ease-out;
 }
 
-.header img.show {
+.header img.loader.show {
   opacity: 1;
 }
 

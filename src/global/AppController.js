@@ -17,7 +17,7 @@ import List from '../valueObjects/List';
  */
 export default class AppController extends Controller {
   /**
-   * Constructs the AppController. Constructed in App.js.
+   * Constructs the AppController. Constructed and attached in App.js.
    */
   constructor() {
     /**

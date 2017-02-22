@@ -4,8 +4,8 @@ export default class AppModel extends Model {
   //-----------------------------------
   // Constructor
   //-----------------------------------
-  constructor() {
-    super();
+  constructor(name) {
+    super(name);
 
     this.addProperty('loadCount', 0);
     this.addProperty('lists', []);
