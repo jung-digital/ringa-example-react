@@ -7,7 +7,6 @@ export default class AppModel extends Model {
   constructor(name) {
     super(name);
 
-    this.addProperty('loadCount', 0);
     this.addProperty('lists', []);
     this.addProperty('windowScrollAllowed', true);
     this.addProperty('tempMessage', true);
@@ -21,10 +20,6 @@ export default class AppModel extends Model {
   //-----------------------------------
   // Properties
   //-----------------------------------
-  get loading() {
-    return this.loadCount !== 0;
-  }
-
   get editing() {
     return this.editItem || this.editList;
   }
