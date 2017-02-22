@@ -70,7 +70,9 @@ export default class InspectController extends Controller {
             });
           }
 
-          arr.push(' - ' + component.constructor.name + (substr !== '' ? ` (Attached Controllers: ${substr})` : ''));
+          if (component.constructor.name) {
+            arr.push(' - ' + component.constructor.name + (substr !== '' ? ` (Attached Controllers: ${substr})` : ''));
+          }
         });
 
         arr.push('[BREAK]');
